@@ -144,7 +144,57 @@
         </div>
 
       </div>
+      </div>
 
+      <!-- PASTE HERE -->
+      <div class="chart-panel">
+        <h2>Cost Breakdown</h2>
+
+        <div class="chart-container">
+
+          <svg width="180" height="180" viewBox="0 0 180 180">
+            <circle cx="90" cy="90" r="60" fill="none"
+                    stroke="#e5e7eb" stroke-width="22"/>
+
+            <circle id="matCircle" cx="90" cy="90" r="60"
+                    fill="none" stroke="#2563eb"
+                    stroke-width="22"
+                    transform="rotate(-90 90 90)"
+                    stroke-dasharray="0 377"/>
+
+            <circle id="labCircle" cx="90" cy="90" r="60"
+                    fill="none" stroke="#16a34a"
+                    stroke-width="22"
+                    transform="rotate(-90 90 90)"
+                    stroke-dasharray="0 377"/>
+
+            <circle id="ohCircle" cx="90" cy="90" r="60"
+                    fill="none" stroke="#f59e0b"
+                    stroke-width="22"
+                    transform="rotate(-90 90 90)"
+                    stroke-dasharray="0 377"/>
+
+            <text id="centerCost" x="90" y="90"
+                  text-anchor="middle"
+                  font-size="16"
+                  font-weight="bold">₹0</text>
+
+            <text x="90" y="108"
+                  text-anchor="middle"
+                  font-size="10">Per Unit</text>
+          </svg>
+
+          <div class="legend">
+            <div><span class="blue"></span> Material</div>
+            <div><span class="green"></span> Labour</div>
+            <div><span class="orange"></span> Overheads</div>
+          </div>
+
+        </div>
+      </div>
+      <!-- END -->
+
+    </section>
     </section>
 
   </main>
