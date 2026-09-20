@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-  // Department Selection
+  // Department selection
   const departments = document.querySelectorAll(".dept");
 
   departments.forEach(button => {
@@ -11,44 +11,43 @@ document.addEventListener("DOMContentLoaded", function () {
         "Department : " + button.innerText;
     });
   });
-  // Absorption Method
-const method = document.getElementById("method");
-const extraLabel = document.getElementById("extraLabel");
-const extraInput = document.getElementById("extraInput");
 
-method.addEventListener("change", () => {
+  // Absorption method
+  const method = document.getElementById("method");
+  const extraLabel = document.getElementById("extraLabel");
+  const extraInput = document.getElementById("extraInput");
 
-  if(method.value === "labour"){
-    extraLabel.innerText = "Total Labour Hours";
-    extraInput.value = 6000;
-  }
+  method.addEventListener("change", () => {
 
-  if(method.value === "machine"){
-    extraLabel.innerText = "Total Machine Hours";
-    extraInput.value = 3000;
-  }
+    if(method.value==="unit"){
+      extraLabel.innerText="Units Produced";
+      extraInput.value=6000;
+    }
 
-  if(method.value === "dlc"){
-    extraLabel.innerText = "Total Direct Labour Cost (₹)";
-    extraInput.value = 600000;
-  }
+    if(method.value==="labour"){
+      extraLabel.innerText="Total Labour Hours";
+      extraInput.value=6000;
+    }
 
-  if(method.value === "prime"){
-    extraLabel.innerText = "Prime Cost (₹)";
-    extraInput.value = 1400000;
-  }
+    if(method.value==="machine"){
+      extraLabel.innerText="Total Machine Hours";
+      extraInput.value=3000;
+    }
 
-  if(method.value === "unit"){
-    extraLabel.innerText = "Units Produced";
-    extraInput.value = 6000;
-  }
+    if(method.value==="dlc"){
+      extraLabel.innerText="Total Direct Labour Cost (₹)";
+      extraInput.value=600000;
+    }
 
-});
+    if(method.value==="prime"){
+      extraLabel.innerText="Prime Cost (₹)";
+      extraInput.value=1400000;
+    }
 
-  // Cost Sheet Calculation
-  const btn = document.querySelector(".simulate-btn");
+  });
 
-  btn.addEventListener("click", () => {
+  // Calculate
+  document.querySelector(".simulate-btn").addEventListener("click", () => {
 
     const oh = Number(document.getElementById("oh").value);
     const material = Number(document.getElementById("material").value);
@@ -57,45 +56,40 @@ method.addEventListener("change", () => {
 
     const materialPU = material / units;
     const labourPU = labour / units;
-  let overheadPU = 0;
-const base = Number(extraInput.value);
 
-switch(method.value){
+    let overheadPU = 0;
+    const base = Number(extraInput.value);
 
-  case "unit":
-    overheadPU = oh / units;
-    break;
+    switch(method.value){
 
-  case "labour":
-    overheadPU = oh / base;
-    break;
+      case "unit":
+        overheadPU = oh / units;
+        break;
 
-  case "machine":
-    overheadPU = oh / base;
-    break;
+      case "labour":
+        overheadPU = oh / base;
+        break;
 
-  case "dlc":
-    overheadPU = (oh / base) * labourPU;
-    break;
+      case "machine":
+        overheadPU = oh / base;
+        break;
 
-  case "prime":
-    const primePU = materialPU + labourPU;
-    overheadPU = (oh / base) * primePU;
-    break;
-}
+      case "dlc":
+        overheadPU = (oh / base) * labourPU;
+        break;
+
+      case "prime":
+        const primePU = materialPU + labourPU;
+        overheadPU = (oh / base) * primePU;
+        break;
+    }
+
     const totalPU = materialPU + labourPU + overheadPU;
 
-   document.getElementById("matPU").innerText =
-"₹" + materialPU.toFixed(2);
-
-document.getElementById("labPU").innerText =
-"₹" + labourPU.toFixed(2);
-
-document.getElementById("ohPU").innerText =
-"₹" + overheadPU.toFixed(2);
-
-document.getElementById("totalPU").innerText =
-"₹" + totalPU.toFixed(2);
+    document.getElementById("matPU").innerText = "₹" + materialPU.toFixed(2);
+    document.getElementById("labPU").innerText = "₹" + labourPU.toFixed(2);
+    document.getElementById("ohPU").innerText = "₹" + overheadPU.toFixed(2);
+    document.getElementById("totalPU").innerText = "₹" + totalPU.toFixed(2);
 
   });
 
