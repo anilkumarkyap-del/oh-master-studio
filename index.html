@@ -57,103 +57,91 @@
 
     </div>
 
-    <!-- Department Selection -->
+    <!-- Department & Factory Panel -->
     <section class="panel">
-      <h2 style="margin-top:30px;">Factory Setup</h2>
-
-<div class="factory-grid">
-  <div class="input-box">
-  <label>Absorption Method</label>
-
-  <select id="method">
-    <option value="unit">Unit Method</option>
-    <option value="labour">Labour Hour</option>
-    <option value="machine">Machine Hour</option>
-    <option value="dlc">Direct Labour Cost %</option>
-    <option value="prime">Prime Cost %</option>
-  </select>
-</div>
-
-<div class="input-box" id="extraBox">
-  <label id="extraLabel">Labour Hours</label>
-  <input type="number" id="extraInput" value="6000">
-</div>
-
-  <div class="input-box">
-    <label>Factory Overheads (₹)</label>
-    <input type="number" id="oh" value="120000">
-  </div>
-
-  <div class="input-box">
-    <label>Direct Material (₹)</label>
-    <input type="number" id="material" value="800000">
-  </div>
-
-  <div class="input-box">
-    <label>Direct Labour (₹)</label>
-    <input type="number" id="labour" value="600000">
-  </div>
-
-  <div class="input-box">
-    <label>Units Produced</label>
-    <input type="number" id="units" value="6000">
-  </div>
-
-</div>
-
-<div class="factory-grid">
-
-  <div class="input-box">
-    <label>Absorption Method</label>
-    <select id="method">
-      <option value="unit">Unit Method</option>
-      <option value="labour">Labour Hour</option>
-      <option value="machine">Machine Hour</option>
-      <option value="dlc">Direct Labour Cost %</option>
-      <option value="prime">Prime Cost %</option>
-    </select>
-  </div>
-
-  <div class="input-box">
-    <label id="extraLabel">Labour Hours</label>
-    <input type="number" id="extraInput" value="6000">
-  </div>
-
-</div>
-
-<button class="simulate-btn">Calculate Cost Sheet</button>
-      <div class="results">
-
-  <div class="result-card">
-    <h4>Material / Unit</h4>
-    <h2 id="matPU">₹0</h2>
-  </div>
-
-  <div class="result-card">
-    <h4>Labour / Unit</h4>
-    <h2 id="labPU">₹0</h2>
-  </div>
-
-  <div class="result-card">
-    <h4>Overhead / Unit</h4>
-    <h2 id="ohPU">₹0</h2>
-  </div>
-
-  <div class="result-card total">
-    <h4>Total Cost</h4>
-    <h2 id="totalPU">₹0</h2>
-  </div>
-
-</div>
 
       <h2>Select Department</h2>
 
       <div class="departments">
-
         <button class="dept">🧵 Sewing</button>
         <button class="dept">✂️ Cutting</button>
         <button class="dept">🎨 Dyeing</button>
         <button class="dept">📦 Packaging</button>
+      </div>
+
+      <h2 style="margin-top:30px;">Factory Setup</h2>
+
+      <div class="factory-grid">
+
+        <div class="input-box">
+          <label>Factory Overheads (₹)</label>
+          <input type="number" id="oh" value="120000">
+        </div>
+
+        <div class="input-box">
+          <label>Direct Material (₹)</label>
+          <input type="number" id="material" value="800000">
+        </div>
+
+        <div class="input-box">
+          <label>Direct Labour (₹)</label>
+          <input type="number" id="labour" value="600000">
+        </div>
+
+        <div class="input-box">
+          <label>Units Produced</label>
+          <input type="number" id="units" value="6000">
+        </div>
+
+      </div>
+
+      <!-- Absorption Method -->
+      <div class="factory-grid" style="margin-top:15px;">
+
+        <div class="input-box">
+          <label>Absorption Method</label>
+
+          <select id="method">
+            <option value="unit">Unit Method</option>
+            <option value="labour">Labour Hour</option>
+            <option value="machine">Machine Hour</option>
+            <option value="dlc">Direct Labour Cost %</option>
+            <option value="prime">Prime Cost %</option>
+          </select>
+
+        </div>
+
+        <div class="input-box">
+          <label id="extraLabel">Labour Hours</label>
+          <input type="number" id="extraInput" value="6000">
+        </div>
+
+      </div>
+
+      <button class="simulate-btn">Calculate Cost Sheet</button>
+
+      <!-- Live Result Cards -->
+      <div class="results">
+
+        <div class="result-card">
+          <h4>Material / Unit</h4>
+          <h2 id="matPU">₹0.00</h2>
+        </div>
+
+        <div class="result-card">
+          <h4>Labour / Unit</h4>
+          <h2 id="labPU">₹0.00</h2>
+        </div>
+
+        <div class="result-card">
+          <h4>Overhead / Unit</h4>
+          <h2 id="ohPU">₹0.00</h2>
+        </div>
+
+        <div class="result-card total">
+          <h4>Total Cost</h4>
+          <h2 id="totalPU">₹0.00</h2>
+        </div>
 
       </div>
 
