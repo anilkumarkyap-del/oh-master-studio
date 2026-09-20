@@ -27,15 +27,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const overheadPU = oh / units;
     const totalPU = materialPU + labourPU + overheadPU;
 
-    alert(
-`COST SHEET PER T-SHIRT
+   document.getElementById("matPU").innerText =
+"₹" + materialPU.toFixed(2);
 
-Material : ₹${materialPU.toFixed(2)}
-Labour : ₹${labourPU.toFixed(2)}
-Overhead : ₹${overheadPU.toFixed(2)}
+document.getElementById("labPU").innerText =
+"₹" + labourPU.toFixed(2);
 
-TOTAL COST = ₹${totalPU.toFixed(2)}`
-    );
+document.getElementById("ohPU").innerText =
+"₹" + overheadPU.toFixed(2);
+
+document.getElementById("totalPU").innerText =
+"₹" + totalPU.toFixed(2);
 
   });
 
