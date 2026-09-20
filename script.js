@@ -11,6 +11,39 @@ document.addEventListener("DOMContentLoaded", function () {
         "Department : " + button.innerText;
     });
   });
+  // Absorption Method
+const method = document.getElementById("method");
+const extraLabel = document.getElementById("extraLabel");
+const extraInput = document.getElementById("extraInput");
+
+method.addEventListener("change", () => {
+
+  if(method.value === "labour"){
+    extraLabel.innerText = "Total Labour Hours";
+    extraInput.value = 6000;
+  }
+
+  if(method.value === "machine"){
+    extraLabel.innerText = "Total Machine Hours";
+    extraInput.value = 3000;
+  }
+
+  if(method.value === "dlc"){
+    extraLabel.innerText = "Total Direct Labour Cost (₹)";
+    extraInput.value = 600000;
+  }
+
+  if(method.value === "prime"){
+    extraLabel.innerText = "Prime Cost (₹)";
+    extraInput.value = 1400000;
+  }
+
+  if(method.value === "unit"){
+    extraLabel.innerText = "Units Produced";
+    extraInput.value = 6000;
+  }
+
+});
 
   // Cost Sheet Calculation
   const btn = document.querySelector(".simulate-btn");
