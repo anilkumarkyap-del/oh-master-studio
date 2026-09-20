@@ -134,3 +134,8 @@ body{
     background:#2563eb;
     color:white;
 }
+.dept.active{
+  background:#2563eb;
+  color:white;
+  border-color:#2563eb;
+}
