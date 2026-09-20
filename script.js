@@ -90,6 +90,30 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("labPU").innerText = "₹" + labourPU.toFixed(2);
     document.getElementById("ohPU").innerText = "₹" + overheadPU.toFixed(2);
     document.getElementById("totalPU").innerText = "₹" + totalPU.toFixed(2);
+    // ===== Donut Chart =====
+
+const total = materialPU + labourPU + overheadPU;
+const C = 377;
+
+const matLen = (materialPU / total) * C;
+const labLen = (labourPU / total) * C;
+const ohLen = (overheadPU / total) * C;
+
+const mat = document.getElementById("matCircle");
+const lab = document.getElementById("labCircle");
+const ohc = document.getElementById("ohCircle");
+
+mat.setAttribute("stroke-dasharray", `${matLen} ${C}`);
+mat.setAttribute("stroke-dashoffset", "0");
+
+lab.setAttribute("stroke-dasharray", `${labLen} ${C}`);
+lab.setAttribute("stroke-dashoffset", `-${matLen}`);
+
+ohc.setAttribute("stroke-dasharray", `${ohLen} ${C}`);
+ohc.setAttribute("stroke-dashoffset", `-${matLen + labLen}`);
+
+document.getElementById("centerCost").textContent =
+"₹" + totalPU.toFixed(0);
 
   });
 
