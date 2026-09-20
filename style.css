@@ -215,3 +215,34 @@ body{
 .total h2{
     color:#16a34a;
 }
+.chart-panel{
+    background:white;
+    margin-top:25px;
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+.chart-container{
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    flex-wrap:wrap;
+}
+
+.legend div{
+    margin:12px 0;
+    font-weight:600;
+}
+
+.legend span{
+    display:inline-block;
+    width:18px;
+    height:18px;
+    border-radius:4px;
+    margin-right:10px;
+}
+
+.blue{background:#2563eb;}
+.green{background:#16a34a;}
+.orange{background:#f59e0b;}
