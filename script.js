@@ -122,6 +122,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("centerCost").textContent =
       "₹" + totalPU.toFixed(0);
+    // Percentage Legend
+document.getElementById("matPct").textContent =
+  Math.round((materialPU/total)*100) + "%";
+
+document.getElementById("labPct").textContent =
+  Math.round((labourPU/total)*100) + "%";
+
+document.getElementById("ohPct").textContent =
+  Math.round((overheadPU/total)*100) + "%";
 
   });
 
