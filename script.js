@@ -57,7 +57,32 @@ method.addEventListener("change", () => {
 
     const materialPU = material / units;
     const labourPU = labour / units;
-    const overheadPU = oh / units;
+  let overheadPU = 0;
+const base = Number(extraInput.value);
+
+switch(method.value){
+
+  case "unit":
+    overheadPU = oh / units;
+    break;
+
+  case "labour":
+    overheadPU = oh / base;
+    break;
+
+  case "machine":
+    overheadPU = oh / base;
+    break;
+
+  case "dlc":
+    overheadPU = (oh / base) * labourPU;
+    break;
+
+  case "prime":
+    const primePU = materialPU + labourPU;
+    overheadPU = (oh / base) * primePU;
+    break;
+}
     const totalPU = materialPU + labourPU + overheadPU;
 
    document.getElementById("matPU").innerText =
