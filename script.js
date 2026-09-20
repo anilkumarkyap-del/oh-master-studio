@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-  // Department selection
+  // ===== Department Selection =====
   const departments = document.querySelectorAll(".dept");
 
   departments.forEach(button => {
@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Absorption method
+  // ===== Absorption Method =====
   const method = document.getElementById("method");
   const extraLabel = document.getElementById("extraLabel");
   const extraInput = document.getElementById("extraInput");
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   });
 
-  // Calculate
+  // ===== Calculate =====
   document.querySelector(".simulate-btn").addEventListener("click", () => {
 
     const oh = Number(document.getElementById("oh").value);
@@ -86,34 +86,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const totalPU = materialPU + labourPU + overheadPU;
 
-    document.getElementById("matPU").innerText = "₹" + materialPU.toFixed(2);
-    document.getElementById("labPU").innerText = "₹" + labourPU.toFixed(2);
-    document.getElementById("ohPU").innerText = "₹" + overheadPU.toFixed(2);
-    document.getElementById("totalPU").innerText = "₹" + totalPU.toFixed(2);
+    // KPI Cards
+    document.getElementById("matPU").innerText =
+      "₹" + materialPU.toFixed(2);
+
+    document.getElementById("labPU").innerText =
+      "₹" + labourPU.toFixed(2);
+
+    document.getElementById("ohPU").innerText =
+      "₹" + overheadPU.toFixed(2);
+
+    document.getElementById("totalPU").innerText =
+      "₹" + totalPU.toFixed(2);
+
     // ===== Donut Chart =====
+    const total = materialPU + labourPU + overheadPU;
+    const C = 377;
 
-const total = materialPU + labourPU + overheadPU;
-const C = 377;
+    const matLen = (materialPU/total)*C;
+    const labLen = (labourPU/total)*C;
+    const ohLen = (overheadPU/total)*C;
 
-const matLen = (materialPU / total) * C;
-const labLen = (labourPU / total) * C;
-const ohLen = (overheadPU / total) * C;
+    const mat = document.getElementById("matCircle");
+    const lab = document.getElementById("labCircle");
+    const ohc = document.getElementById("ohCircle");
 
-const mat = document.getElementById("matCircle");
-const lab = document.getElementById("labCircle");
-const ohc = document.getElementById("ohCircle");
+    mat.setAttribute("stroke-dasharray", `${matLen} ${C}`);
+    mat.setAttribute("stroke-dashoffset", "0");
 
-mat.setAttribute("stroke-dasharray", `${matLen} ${C}`);
-mat.setAttribute("stroke-dashoffset", "0");
+    lab.setAttribute("stroke-dasharray", `${labLen} ${C}`);
+    lab.setAttribute("stroke-dashoffset", `-${matLen}`);
 
-lab.setAttribute("stroke-dasharray", `${labLen} ${C}`);
-lab.setAttribute("stroke-dashoffset", `-${matLen}`);
+    ohc.setAttribute("stroke-dasharray", `${ohLen} ${C}`);
+    ohc.setAttribute("stroke-dashoffset", `-${matLen + labLen}`);
 
-ohc.setAttribute("stroke-dasharray", `${ohLen} ${C}`);
-ohc.setAttribute("stroke-dashoffset", `-${matLen + labLen}`);
-
-document.getElementById("centerCost").textContent =
-"₹" + totalPU.toFixed(0);
+    document.getElementById("centerCost").textContent =
+      "₹" + totalPU.toFixed(0);
 
   });
 
