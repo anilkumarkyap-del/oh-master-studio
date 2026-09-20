@@ -1,1 +1,136 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
 
+body{
+    background:#eef3f9;
+}
+
+.container{
+    display:flex;
+    min-height:100vh;
+}
+
+/* Sidebar */
+.sidebar{
+    width:230px;
+    background:#0f172a;
+    color:white;
+    padding:25px;
+}
+
+.sidebar h2{
+    font-size:24px;
+    margin-bottom:5px;
+}
+
+.sidebar p{
+    color:#94a3b8;
+    margin-bottom:30px;
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar li{
+    padding:12px;
+    margin:8px 0;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.sidebar li:hover{
+    background:#1e40af;
+}
+
+/* Main */
+.main{
+    flex:1;
+    padding:30px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.topbar h1{
+    color:#1e3a8a;
+}
+
+.topbar button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 18px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+/* KPI Cards */
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    border-radius:14px;
+    padding:20px;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+.card h3{
+    color:#64748b;
+    font-size:14px;
+}
+
+.card h2{
+    margin-top:8px;
+    color:#2563eb;
+    font-size:30px;
+}
+
+/* Panel */
+.panel{
+    background:white;
+    border-radius:16px;
+    padding:25px;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+.panel h2{
+    color:#1e3a8a;
+    margin-bottom:18px;
+}
+
+/* Department buttons */
+.departments{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.dept{
+    background:#f8fafc;
+    border:2px solid #dbeafe;
+    border-radius:12px;
+    padding:18px;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.dept:hover{
+    background:#2563eb;
+    color:white;
+}
