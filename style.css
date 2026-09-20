@@ -26,7 +26,14 @@ body{
     font-size:24px;
     margin-bottom:5px;
 }
-
+.input-box select{
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    font-size:16px;
+    background:white;
+    width:100%;
+}
 .sidebar p{
     color:#94a3b8;
     margin-bottom:30px;
