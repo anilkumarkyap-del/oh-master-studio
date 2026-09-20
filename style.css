@@ -176,3 +176,35 @@ body{
  font-weight:bold;
  cursor:pointer;
 }
+.results{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-top:25px;
+}
+
+.result-card{
+    background:white;
+    border-radius:14px;
+    padding:20px;
+    box-shadow:0 6px 15px rgba(0,0,0,.08);
+    border-left:6px solid #2563eb;
+}
+
+.result-card h4{
+    color:#64748b;
+    margin-bottom:8px;
+}
+
+.result-card h2{
+    color:#1e40af;
+    font-size:28px;
+}
+
+.total{
+    border-left:6px solid #16a34a;
+}
+
+.total h2{
+    color:#16a34a;
+}
