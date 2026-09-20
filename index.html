@@ -101,6 +101,26 @@
 
 </div>
 
+<div class="factory-grid">
+
+  <div class="input-box">
+    <label>Absorption Method</label>
+    <select id="method">
+      <option value="unit">Unit Method</option>
+      <option value="labour">Labour Hour</option>
+      <option value="machine">Machine Hour</option>
+      <option value="dlc">Direct Labour Cost %</option>
+      <option value="prime">Prime Cost %</option>
+    </select>
+  </div>
+
+  <div class="input-box">
+    <label id="extraLabel">Labour Hours</label>
+    <input type="number" id="extraInput" value="6000">
+  </div>
+
+</div>
+
 <button class="simulate-btn">Calculate Cost Sheet</button>
       <div class="results">
 
