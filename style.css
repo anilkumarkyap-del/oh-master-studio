@@ -306,3 +306,50 @@ body{
     color:#64748b;
     font-size:13px;
 }
+/* ==========================================
+   METHOD COMPARISON BAR CHART
+========================================== */
+
+.compare-panel{
+    background:#ffffff;
+    margin-top:25px;
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+.compare-panel h2{
+    color:#1e3a8a;
+    margin-bottom:20px;
+}
+
+.bar-row{
+    display:grid;
+    grid-template-columns:130px 1fr 60px;
+    align-items:center;
+    gap:12px;
+    margin:16px 0;
+}
+
+.bar-row label{
+    font-size:14px;
+    font-weight:600;
+    color:#334155;
+}
+
+.bar-bg{
+    height:16px;
+    background:#e5e7eb;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.bar{
+    width:0%;
+    height:100%;
+    border-radius:20px;
+    transition:width 1s ease;
+}
+
+.purple{background:#7c3aed;}
+.cyan{background:#06b6d4;}
