@@ -387,3 +387,66 @@ body{
 .pdf-btn:hover{
     background-color:#b91c1c !important;
 }
+/* ===================================
+   STUDENT PRACTICE MODE
+=================================== */
+
+.practice-panel{
+    background:#ffffff;
+    margin-top:25px;
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+.practice-panel h2{
+    color:#1e3a8a;
+    margin-bottom:18px;
+}
+
+.question-card{
+    background:#f8fafc;
+    border-left:6px solid #2563eb;
+    padding:18px;
+    border-radius:10px;
+    line-height:1.9;
+}
+
+.question-card p{
+    color:#334155;
+    font-size:15px;
+}
+
+.practice-buttons{
+    display:flex;
+    gap:15px;
+    margin-top:18px;
+}
+
+.generate-btn,
+.load-btn{
+    flex:1;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.generate-btn{
+    background:#7c3aed;
+}
+
+.generate-btn:hover{
+    background:#6d28d9;
+}
+
+.load-btn{
+    background:#0ea5e9;
+}
+
+.load-btn:hover{
+    background:#0284c7;
+}
