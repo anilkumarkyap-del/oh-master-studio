@@ -35,13 +35,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if(method.value==="dlc"){
-      extraLabel.innerText="Total Direct Labour Cost (₹)";
+      extraLabel.innerText="Direct Labour Cost (₹)";
       extraInput.value=600000;
     }
 
     if(method.value==="prime"){
-      extraLabel.innerText="Prime Cost (₹)";
-      extraInput.value=1400000;
+      extraLabel.innerText="Prime Cost (Auto)";
+      extraInput.value=0;
+      extraInput.disabled=true;
+    }else{
+      extraInput.disabled=false;
     }
 
   });
@@ -57,42 +60,44 @@ document.addEventListener("DOMContentLoaded", function () {
     const materialPU = material / units;
     const labourPU = labour / units;
 
-   let overheadPU = 0;
-let rate = 0;
+    const primeCost = material + labour;
+
+    let overheadPU = 0;
+    let rate = 0;
+
     const base = Number(extraInput.value);
 
-   switch(method.value){
+    switch(method.value){
 
-  case "unit":
-    rate = oh / units;
-    overheadPU = rate;
-    break;
+      case "unit":
+        rate = oh / units;
+        overheadPU = rate;
+        break;
 
-  case "labour":
-    rate = oh / base;
-    overheadPU = rate;
-    break;
+      case "labour":
+        rate = oh / base;
+        overheadPU = rate;
+        break;
 
-  case "machine":
-    rate = oh / base;
-    overheadPU = rate;
-    break;
+      case "machine":
+        rate = oh / base;
+        overheadPU = rate;
+        break;
 
-  case "dlc":
-    rate = (oh / base) * 100;
-    overheadPU = (oh / base) * labourPU;
-    break;
+      case "dlc":
+        rate = (oh / labour) * 100;
+        overheadPU = (oh / labour) * labourPU;
+        break;
 
-  case "prime":
-    const primePU = materialPU + labourPU;
-    rate = (oh / base) * 100;
-    overheadPU = (oh / base) * primePU;
-    break;
-}
+      case "prime":
+        rate = (oh / primeCost) * 100;
+        overheadPU = (oh / primeCost) * (materialPU + labourPU);
+        break;
+    }
 
     const totalPU = materialPU + labourPU + overheadPU;
 
-    // KPI Cards
+    // ===== KPI Cards =====
     document.getElementById("matPU").innerText =
       "₹" + materialPU.toFixed(2);
 
@@ -104,6 +109,19 @@ let rate = 0;
 
     document.getElementById("totalPU").innerText =
       "₹" + totalPU.toFixed(2);
+
+    // ===== OH Rate Card =====
+    if(method.value==="dlc" || method.value==="prime"){
+      document.getElementById("ratePU").innerText =
+        rate.toFixed(2) + "%";
+      document.getElementById("rateType").innerText =
+        "Absorption Rate";
+    }else{
+      document.getElementById("ratePU").innerText =
+        "₹" + rate.toFixed(2);
+      document.getElementById("rateType").innerText =
+        "Per Hour / Unit";
+    }
 
     // ===== Donut Chart =====
     const total = materialPU + labourPU + overheadPU;
@@ -128,15 +146,16 @@ let rate = 0;
 
     document.getElementById("centerCost").textContent =
       "₹" + totalPU.toFixed(0);
-    // Percentage Legend
-document.getElementById("matPct").textContent =
-  Math.round((materialPU/total)*100) + "%";
 
-document.getElementById("labPct").textContent =
-  Math.round((labourPU/total)*100) + "%";
+    // ===== Percentage Legend =====
+    document.getElementById("matPct").textContent =
+      Math.round((materialPU/total)*100) + "%";
 
-document.getElementById("ohPct").textContent =
-  Math.round((overheadPU/total)*100) + "%";
+    document.getElementById("labPct").textContent =
+      Math.round((labourPU/total)*100) + "%";
+
+    document.getElementById("ohPct").textContent =
+      Math.round((overheadPU/total)*100) + "%";
 
   });
 
