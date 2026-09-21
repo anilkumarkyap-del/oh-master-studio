@@ -353,3 +353,34 @@ body{
 
 .purple{background:#7c3aed;}
 .cyan{background:#06b6d4;}
+/* ==========================
+   Action Buttons
+========================== */
+
+.action-buttons{
+    display:flex;
+    gap:15px;
+    margin-top:20px;
+}
+
+.action-buttons .simulate-btn{
+    flex:1;
+    margin-top:0;
+}
+
+.pdf-btn{
+    flex:1;
+    background:#dc2626;
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    padding:14px;
+    transition:.3s;
+}
+
+.pdf-btn:hover{
+    background:#b91c1c;
+}
