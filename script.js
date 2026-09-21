@@ -122,21 +122,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // ==========================
     // KPI Cards
     // ==========================
-    document.getElementById("matPU").innerText =
-      "₹" + materialPU.toFixed(2);
+    document.getElementById("matPU").innerText = "₹" + materialPU.toFixed(2);
+    document.getElementById("labPU").innerText = "₹" + labourPU.toFixed(2);
+    document.getElementById("ohPU").innerText = "₹" + overheadPU.toFixed(2);
+    document.getElementById("totalPU").innerText = "₹" + totalPU.toFixed(2);
 
-    document.getElementById("labPU").innerText =
-      "₹" + labourPU.toFixed(2);
-
-    document.getElementById("ohPU").innerText =
-      "₹" + overheadPU.toFixed(2);
-
-    document.getElementById("totalPU").innerText =
-      "₹" + totalPU.toFixed(2);
-
-    // ==========================
-    // OH Rate Card
-    // ==========================
+    // OH Rate
     document.getElementById("ratePU").innerText = rateText;
     document.getElementById("rateType").innerText = rateType;
 
@@ -150,18 +141,23 @@ document.addEventListener("DOMContentLoaded", function () {
     const labLen = (labourPU / total) * C;
     const ohLen = (overheadPU / total) * C;
 
-    const matCircle = document.getElementById("matCircle");
-    const labCircle = document.getElementById("labCircle");
-    const ohCircle = document.getElementById("ohCircle");
+    document.getElementById("matCircle")
+      .setAttribute("stroke-dasharray", `${matLen} ${C}`);
 
-    matCircle.setAttribute("stroke-dasharray", `${matLen} ${C}`);
-    matCircle.setAttribute("stroke-dashoffset", "0");
+    document.getElementById("matCircle")
+      .setAttribute("stroke-dashoffset", "0");
 
-    labCircle.setAttribute("stroke-dasharray", `${labLen} ${C}`);
-    labCircle.setAttribute("stroke-dashoffset", `-${matLen}`);
+    document.getElementById("labCircle")
+      .setAttribute("stroke-dasharray", `${labLen} ${C}`);
 
-    ohCircle.setAttribute("stroke-dasharray", `${ohLen} ${C}`);
-    ohCircle.setAttribute("stroke-dashoffset", `-${matLen + labLen}`);
+    document.getElementById("labCircle")
+      .setAttribute("stroke-dashoffset", `-${matLen}`);
+
+    document.getElementById("ohCircle")
+      .setAttribute("stroke-dasharray", `${ohLen} ${C}`);
+
+    document.getElementById("ohCircle")
+      .setAttribute("stroke-dashoffset", `-${matLen + labLen}`);
 
     document.getElementById("centerCost").innerText =
       "₹" + totalPU.toFixed(0);
@@ -177,6 +173,40 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("ohPct").innerText =
       Math.round((overheadPU / total) * 100) + "%";
+
+    // ==========================
+    // METHOD COMPARISON CHART
+    // ==========================
+
+    const unitValue = oh / units;
+    const labourValue = oh / 6000;
+    const machineValue = oh / 3000;
+    const dlcValue = (oh / labour) * labourPU;
+    const primeValue = (oh / primeCost) * (materialPU + labourPU);
+
+    const maxValue = Math.max(
+      unitValue,
+      labourValue,
+      machineValue,
+      dlcValue,
+      primeValue
+    );
+
+    function drawBar(barId, textId, value){
+
+      const width = (value / maxValue) * 100;
+
+      document.getElementById(barId).style.width = width + "%";
+
+      document.getElementById(textId).innerText =
+        "₹" + value.toFixed(2);
+    }
+
+    drawBar("barUnit","txtUnit",unitValue);
+    drawBar("barLabour","txtLabour",labourValue);
+    drawBar("barMachine","txtMachine",machineValue);
+    drawBar("barDLC","txtDLC",dlcValue);
+    drawBar("barPrime","txtPrime",primeValue);
 
   });
 
