@@ -301,3 +301,8 @@ body{
 .legend strong{
     color:#1e3a8a;
 }
+.result-card p{
+    margin-top:8px;
+    color:#64748b;
+    font-size:13px;
+}
