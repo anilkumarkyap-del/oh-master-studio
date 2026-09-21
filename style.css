@@ -450,3 +450,21 @@ body{
 .load-btn:hover{
     background:#0284c7;
 }
+/* RESET BUTTON */
+
+.reset-btn{
+    flex:1;
+    background:#475569;
+    color:white;
+    border:none;
+    border-radius:10px;
+    padding:14px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.reset-btn:hover{
+    background:#334155;
+}
