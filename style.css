@@ -487,3 +487,40 @@ body{
     color:#64748b;
     font-size:14px;
 }
+/* ==========================
+   REPORT HISTORY
+========================== */
+
+.history-panel{
+    margin-top:30px;
+    background:#ffffff;
+    border-radius:14px;
+    padding:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.history-panel h2{
+    margin-bottom:15px;
+    color:#1e3a8a;
+}
+
+#historyTable{
+    width:100%;
+    border-collapse:collapse;
+}
+
+#historyTable th{
+    background:#1e40af;
+    color:#fff;
+    padding:12px;
+    text-align:left;
+}
+
+#historyTable td{
+    padding:12px;
+    border-bottom:1px solid #e5e7eb;
+}
+
+#historyTable tr:hover{
+    background:#f8fafc;
+}
