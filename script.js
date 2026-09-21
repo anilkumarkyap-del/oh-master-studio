@@ -261,5 +261,57 @@ document.addEventListener("DOMContentLoaded", function () {
     doc.save("OH-Cost-Sheet.pdf");
 
   });
+  // ===================================
+// STUDENT PRACTICE MODE
+// ===================================
+
+const methods = ["Unit Method","Labour Hour Method","Machine Hour Method"];
+
+document.getElementById("generateBtn").addEventListener("click", () => {
+
+  const units = [4000,5000,6000][Math.floor(Math.random()*3)];
+  const material = [480000,640000,800000][Math.floor(Math.random()*3)];
+  const labour = [320000,450000,600000][Math.floor(Math.random()*3)];
+  const overhead = [96000,108000,120000][Math.floor(Math.random()*3)];
+  const labourHours = [5000,6000,7200][Math.floor(Math.random()*3)];
+  const machineHours = [2500,3000,3600][Math.floor(Math.random()*3)];
+
+  const chosen = methods[Math.floor(Math.random()*methods.length)];
+
+  qOH.innerText = overhead;
+  qMat.innerText = material;
+  qLab.innerText = labour;
+  qUnits.innerText = units;
+  qLH.innerText = (chosen === "Machine Hour Method") ? machineHours : labourHours;
+  qMethod.innerText = chosen;
+
+});
+
+document.getElementById("loadBtn").addEventListener("click", () => {
+
+  oh.value = qOH.innerText;
+  material.value = qMat.innerText;
+  labour.value = qLab.innerText;
+  units.value = qUnits.innerText;
+
+  if(qMethod.innerText === "Unit Method"){
+    method.value = "unit";
+    extraLabel.innerText = "Units Produced";
+    extraInput.value = qUnits.innerText;
+  }
+
+  if(qMethod.innerText === "Labour Hour Method"){
+    method.value = "labour";
+    extraLabel.innerText = "Total Labour Hours";
+    extraInput.value = qLH.innerText;
+  }
+
+  if(qMethod.innerText === "Machine Hour Method"){
+    method.value = "machine";
+    extraLabel.innerText = "Total Machine Hours";
+    extraInput.value = qLH.innerText;
+  }
+
+});
 
 });
