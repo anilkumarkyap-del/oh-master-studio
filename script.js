@@ -61,29 +61,34 @@ document.addEventListener("DOMContentLoaded", function () {
 let rate = 0;
     const base = Number(extraInput.value);
 
-    switch(method.value){
+   switch(method.value){
 
-      case "unit":
-        overheadPU = oh / units;
-        break;
+  case "unit":
+    rate = oh / units;
+    overheadPU = rate;
+    break;
 
-      case "labour":
-        overheadPU = oh / base;
-        break;
+  case "labour":
+    rate = oh / base;
+    overheadPU = rate;
+    break;
 
-      case "machine":
-        overheadPU = oh / base;
-        break;
+  case "machine":
+    rate = oh / base;
+    overheadPU = rate;
+    break;
 
-      case "dlc":
-        overheadPU = (oh / base) * labourPU;
-        break;
+  case "dlc":
+    rate = (oh / base) * 100;
+    overheadPU = (oh / base) * labourPU;
+    break;
 
-      case "prime":
-        const primePU = materialPU + labourPU;
-        overheadPU = (oh / base) * primePU;
-        break;
-    }
+  case "prime":
+    const primePU = materialPU + labourPU;
+    rate = (oh / base) * 100;
+    overheadPU = (oh / base) * primePU;
+    break;
+}
 
     const totalPU = materialPU + labourPU + overheadPU;
 
