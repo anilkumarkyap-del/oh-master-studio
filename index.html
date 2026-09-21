@@ -142,11 +142,12 @@
           <h4>Total Cost</h4>
           <h2 id="totalPU">₹0.00</h2>
         </div>
+
         <div class="result-card">
-  <h4>OH Rate</h4>
-  <h2 id="ratePU">₹0.00</h2>
-  <p id="rateType">Per Unit</p>
-</div>
+          <h4>OH Rate</h4>
+          <h2 id="ratePU">₹0.00</h2>
+          <p id="rateType">Per Unit</p>
+        </div>
 
       </div>
 
@@ -200,28 +201,75 @@
 
           </svg>
 
-         <div class="legend">
+          <div class="legend">
 
-  <div>
-    <span class="blue"></span>
-    Material
-    <strong id="matPct">0%</strong>
-  </div>
+            <div>
+              <span class="blue"></span>
+              Material
+              <strong id="matPct">0%</strong>
+            </div>
 
-  <div>
-    <span class="green"></span>
-    Labour
-    <strong id="labPct">0%</strong>
-  </div>
+            <div>
+              <span class="green"></span>
+              Labour
+              <strong id="labPct">0%</strong>
+            </div>
 
-  <div>
-    <span class="orange"></span>
-    Overheads
-    <strong id="ohPct">0%</strong>
-  </div>
+            <div>
+              <span class="orange"></span>
+              Overheads
+              <strong id="ohPct">0%</strong>
+            </div>
 
-</div>
+          </div>
 
+        </div>
+
+      </div>
+
+      <!-- NEW: Method Comparison -->
+      <div class="compare-panel">
+
+        <h2>Method Comparison</h2>
+
+        <div class="bar-row">
+          <label>Unit Method</label>
+          <div class="bar-bg">
+            <div id="barUnit" class="bar blue"></div>
+          </div>
+          <span id="txtUnit">₹0</span>
+        </div>
+
+        <div class="bar-row">
+          <label>Labour Hour</label>
+          <div class="bar-bg">
+            <div id="barLabour" class="bar green"></div>
+          </div>
+          <span id="txtLabour">₹0</span>
+        </div>
+
+        <div class="bar-row">
+          <label>Machine Hour</label>
+          <div class="bar-bg">
+            <div id="barMachine" class="bar orange"></div>
+          </div>
+          <span id="txtMachine">₹0</span>
+        </div>
+
+        <div class="bar-row">
+          <label>Direct Labour %</label>
+          <div class="bar-bg">
+            <div id="barDLC" class="bar purple"></div>
+          </div>
+          <span id="txtDLC">₹0</span>
+        </div>
+
+        <div class="bar-row">
+          <label>Prime Cost %</label>
+          <div class="bar-bg">
+            <div id="barPrime" class="bar cyan"></div>
+          </div>
+          <span id="txtPrime">₹0</span>
         </div>
 
       </div>
