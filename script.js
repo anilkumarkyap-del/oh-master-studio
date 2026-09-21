@@ -291,5 +291,60 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
   });
+// ==========================
+// RESET SIMULATION
+// ==========================
+document.getElementById("resetBtn").addEventListener("click", () => {
 
+  // Factory values
+  document.getElementById("oh").value = 120000;
+  document.getElementById("material").value = 800000;
+  document.getElementById("labour").value = 600000;
+  document.getElementById("units").value = 6000;
+
+  // Method
+  method.value = "unit";
+  extraLabel.innerText = "Units Produced";
+  extraInput.disabled = false;
+  extraInput.value = 6000;
+
+  // Result cards
+  document.getElementById("matPU").innerText = "₹0.00";
+  document.getElementById("labPU").innerText = "₹0.00";
+  document.getElementById("ohPU").innerText = "₹0.00";
+  document.getElementById("totalPU").innerText = "₹0.00";
+  document.getElementById("ratePU").innerText = "₹0.00";
+  document.getElementById("rateType").innerText = "Per Unit";
+
+  // Donut chart
+  document.getElementById("matCircle").setAttribute("stroke-dasharray","0 377");
+  document.getElementById("labCircle").setAttribute("stroke-dasharray","0 377");
+  document.getElementById("ohCircle").setAttribute("stroke-dasharray","0 377");
+  document.getElementById("centerCost").textContent = "₹0";
+
+  // Percentages
+  document.getElementById("matPct").innerText = "0%";
+  document.getElementById("labPct").innerText = "0%";
+  document.getElementById("ohPct").innerText = "0%";
+
+  // Method comparison
+  ["barUnit","barLabour","barMachine","barDLC","barPrime"].forEach(id=>{
+    document.getElementById(id).style.width = "0%";
+  });
+
+  document.getElementById("txtUnit").innerText = "₹0";
+  document.getElementById("txtLabour").innerText = "₹0";
+  document.getElementById("txtMachine").innerText = "₹0";
+  document.getElementById("txtDLC").innerText = "0%";
+  document.getElementById("txtPrime").innerText = "0%";
+
+  // Student practice
+  document.getElementById("qOH").innerText = 120000;
+  document.getElementById("qMat").innerText = 800000;
+  document.getElementById("qLab").innerText = 600000;
+  document.getElementById("qUnits").innerText = 5000;
+  document.getElementById("qLH").innerText = 6000;
+  document.getElementById("qMethod").innerText = "Labour Hour Method";
+
+});
 });
