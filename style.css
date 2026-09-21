@@ -468,3 +468,22 @@ body{
 .reset-btn:hover{
     background:#334155;
 }
+/* ===== BRAND LOGO ===== */
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.logo{
+    width:70px;
+    height:70px;
+    object-fit:contain;
+}
+
+.subtitle{
+    margin-top:4px;
+    color:#64748b;
+    font-size:14px;
+}
