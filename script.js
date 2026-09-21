@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-  // -------------------------
+  // -----------------------------
   // Department Selection
-  // -------------------------
+  // -----------------------------
   const departments = document.querySelectorAll(".dept");
 
   departments.forEach(btn=>{
@@ -12,12 +12,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // -------------------------
+  // -----------------------------
   // Absorption Method
-  // -------------------------
-  const method = document.getElementById("method");
-  const extraLabel = document.getElementById("extraLabel");
-  const extraInput = document.getElementById("extraInput");
+  // -----------------------------
+  const method=document.getElementById("method");
+  const extraLabel=document.getElementById("extraLabel");
+  const extraInput=document.getElementById("extraInput");
 
   method.addEventListener("change",()=>{
 
@@ -50,15 +50,16 @@ document.addEventListener("DOMContentLoaded", function () {
         extraLabel.innerText="Prime Cost (Auto)";
         extraInput.value="";
         extraInput.disabled=true;
-        extraInput.placeholder="Auto Calculated";
+        extraInput.placeholder="Calculated Automatically";
         break;
+
     }
 
   });
 
-  // -------------------------
+  // -----------------------------
   // Calculate
-  // -------------------------
+  // -----------------------------
   document.querySelector(".simulate-btn").addEventListener("click",()=>{
 
     const oh=Number(document.getElementById("oh").value);
@@ -72,14 +73,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const base=Number(extraInput.value);
 
-    let rate=0;
     let overheadPU=0;
+    let rate=0;
     let rateText="";
     let rateType="";
 
-    // -------------------------
+    // -----------------------------
     // ABSORPTION METHODS
-    // -------------------------
+    // -----------------------------
     switch(method.value){
 
       case "unit":
@@ -124,6 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
       case "dlc":
 
         rate=(oh/labour)*100;
+
         overheadPU=(oh/labour)*labourPU;
 
         rateText=rate.toFixed(2)+"%";
@@ -133,6 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
       case "prime":
 
         rate=(oh/primeCost)*100;
+
         overheadPU=(oh/primeCost)*(materialPU+labourPU);
 
         rateText=rate.toFixed(2)+"%";
@@ -143,9 +146,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const totalPU=materialPU+labourPU+overheadPU;
 
-    // -------------------------
+    // -----------------------------
     // RESULT CARDS
-    // -------------------------
+    // -----------------------------
     document.getElementById("matPU").innerText="₹"+materialPU.toFixed(2);
     document.getElementById("labPU").innerText="₹"+labourPU.toFixed(2);
     document.getElementById("ohPU").innerText="₹"+overheadPU.toFixed(2);
@@ -154,9 +157,9 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("ratePU").innerText=rateText;
     document.getElementById("rateType").innerText=rateType;
 
-    // -------------------------
+    // -----------------------------
     // DONUT CHART
-    // -------------------------
+    // -----------------------------
     const total=materialPU+labourPU+overheadPU;
     const C=377;
 
@@ -164,44 +167,45 @@ document.addEventListener("DOMContentLoaded", function () {
     const labLen=(labourPU/total)*C;
     const ohLen=(overheadPU/total)*C;
 
-    document.getElementById("matCircle")
-      .setAttribute("stroke-dasharray",`${matLen} ${C}`);
-    document.getElementById("matCircle")
-      .setAttribute("stroke-dashoffset","0");
+    document.getElementById("matCircle").setAttribute("stroke-dasharray",`${matLen} ${C}`);
+    document.getElementById("matCircle").setAttribute("stroke-dashoffset","0");
 
-    document.getElementById("labCircle")
-      .setAttribute("stroke-dasharray",`${labLen} ${C}`);
-    document.getElementById("labCircle")
-      .setAttribute("stroke-dashoffset",`-${matLen}`);
+    document.getElementById("labCircle").setAttribute("stroke-dasharray",`${labLen} ${C}`);
+    document.getElementById("labCircle").setAttribute("stroke-dashoffset",`-${matLen}`);
 
-    document.getElementById("ohCircle")
-      .setAttribute("stroke-dasharray",`${ohLen} ${C}`);
-    document.getElementById("ohCircle")
-      .setAttribute("stroke-dashoffset",`-${matLen+labLen}`);
+    document.getElementById("ohCircle").setAttribute("stroke-dasharray",`${ohLen} ${C}`);
+    document.getElementById("ohCircle").setAttribute("stroke-dashoffset",`-${matLen+labLen}`);
 
     document.getElementById("centerCost").textContent="₹"+totalPU.toFixed(2);
 
-    // -------------------------
-    // LEGEND %
-    // -------------------------
+    // -----------------------------
+    // PERCENTAGE LEGEND
+    // -----------------------------
     document.getElementById("matPct").innerText=Math.round((materialPU/total)*100)+"%";
     document.getElementById("labPct").innerText=Math.round((labourPU/total)*100)+"%";
     document.getElementById("ohPct").innerText=Math.round((overheadPU/total)*100)+"%";
 
-    // -------------------------
+    // -----------------------------
     // METHOD COMPARISON
-    // -------------------------
+    // -----------------------------
 
+    // Unit Method
     const unitValue=oh/units;
 
-    const labourRate=oh/6000;
-    const labourValue=labourRate*(6000/units);
+    // Labour Hour Method (dynamic)
+    const labourHours=method.value==="labour" ? base : 6000;
+    const labourRate=oh/labourHours;
+    const labourValue=labourRate*(labourHours/units);
 
-    const machineRate=oh/3000;
-    const machineValue=machineRate*(3000/units);
+    // Machine Hour Method (dynamic)
+    const machineHours=method.value==="machine" ? base : 3000;
+    const machineRate=oh/machineHours;
+    const machineValue=machineRate*(machineHours/units);
 
+    // DLC Method
     const dlcValue=(oh/labour)*labourPU;
 
+    // Prime Cost Method
     const primeValue=(oh/primeCost)*(materialPU+labourPU);
 
     const maxValue=Math.max(
