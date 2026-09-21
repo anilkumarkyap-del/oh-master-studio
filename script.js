@@ -1,17 +1,62 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-  // ==========================
-  // DEPARTMENT SELECTION
-  // ==========================
-  const departments = document.querySelectorAll(".dept");
+ // ==========================
+// INDUSTRY SELECTION
+// ==========================
+const departments = document.querySelectorAll(".dept");
 
-  departments.forEach(btn => {
-    btn.addEventListener("click", () => {
-      departments.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-    });
+departments.forEach(btn => {
+  btn.addEventListener("click", () => {
+
+    // Active button
+    departments.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    const industry = btn.innerText;
+
+    // 👕 Garment → Direct Labour Cost %
+    if (industry.includes("Garment")) {
+      method.value = "dlc";
+      extraLabel.innerText = "Direct Labour Cost (₹)";
+      extraInput.disabled = false;
+      extraInput.value = document.getElementById("labour").value;
+    }
+
+    // 🧱 Brick → Unit Method
+    else if (industry.includes("Brick")) {
+      method.value = "unit";
+      extraLabel.innerText = "Units Produced";
+      extraInput.disabled = false;
+      extraInput.value = document.getElementById("units").value;
+    }
+
+    // ⚙️ CNC Automobile → Machine Hour
+    else if (industry.includes("CNC")) {
+      method.value = "machine";
+      extraLabel.innerText = "Total Machine Hours";
+      extraInput.disabled = false;
+      extraInput.value = 3000;
+    }
+
+    // 🏗️ Construction → Labour Hour
+    else if (industry.includes("Construction")) {
+      method.value = "labour";
+      extraLabel.innerText = "Total Labour Hours";
+      extraInput.disabled = false;
+      extraInput.value = 6000;
+    }
+
+    // 🏭 Steel Fabrication → Prime Cost %
+    else if (industry.includes("Steel")) {
+      method.value = "prime";
+      extraLabel.innerText = "Prime Cost (Auto)";
+      extraInput.disabled = true;
+      extraInput.value = "";
+    }
+
   });
+});
 
   // ==========================
   // ABSORPTION METHOD
