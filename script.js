@@ -15,13 +15,13 @@ departments.forEach(btn => {
 
     const industry = btn.innerText;
 
-    // 👕 Garment → Direct Labour Cost %
-    if (industry.includes("Garment")) {
-      method.value = "dlc";
-      extraLabel.innerText = "Direct Labour Cost (₹)";
-      extraInput.disabled = false;
-      extraInput.value = document.getElementById("labour").value;
-    }
+    // 👕 Garment → Labour Hour Method
+if (industry.includes("Garment")) {
+  method.value = "labour";
+  extraLabel.innerText = "Total Labour Hours";
+  extraInput.disabled = false;
+  extraInput.value = 6000;
+}
 
     // 🧱 Brick → Unit Method
     else if (industry.includes("Brick")) {
