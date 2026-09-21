@@ -1,8 +1,7 @@
-
 document.addEventListener("DOMContentLoaded", function () {
 
   // ==========================
-  // Department Selection
+  // DEPARTMENT SELECTION
   // ==========================
   const departments = document.querySelectorAll(".dept");
 
@@ -14,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // ==========================
-  // Absorption Method
+  // ABSORPTION METHOD
   // ==========================
   const method = document.getElementById("method");
   const extraLabel = document.getElementById("extraLabel");
@@ -54,10 +53,11 @@ document.addEventListener("DOMContentLoaded", function () {
         extraInput.placeholder = "Calculated Automatically";
         break;
     }
+
   });
 
   // ==========================
-  // CALCULATE BUTTON
+  // CALCULATE COST SHEET
   // ==========================
   document.querySelector(".simulate-btn").addEventListener("click", () => {
 
@@ -77,9 +77,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let rateText = "";
     let rateType = "";
 
-    // ==========================
-    // ABSORPTION METHODS
-    // ==========================
     switch(method.value){
 
       case "unit":
@@ -91,16 +88,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
       case "labour":
         rate = oh / base;
-        const labourHourPerUnit = base / units;
-        overheadPU = rate * labourHourPerUnit;
+        overheadPU = rate * (base / units);
         rateText = "₹" + rate.toFixed(2);
         rateType = "Per Labour Hour";
         break;
 
       case "machine":
         rate = oh / base;
-        const machineHourPerUnit = base / units;
-        overheadPU = rate * machineHourPerUnit;
+        overheadPU = rate * (base / units);
         rateText = "₹" + rate.toFixed(2);
         rateType = "Per Machine Hour";
         break;
@@ -122,9 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const totalPU = materialPU + labourPU + overheadPU;
 
-    // ==========================
-    // RESULT CARDS
-    // ==========================
+    // KPI
     document.getElementById("matPU").innerText = "₹" + materialPU.toFixed(2);
     document.getElementById("labPU").innerText = "₹" + labourPU.toFixed(2);
     document.getElementById("ohPU").innerText = "₹" + overheadPU.toFixed(2);
@@ -133,9 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("ratePU").innerText = rateText;
     document.getElementById("rateType").innerText = rateType;
 
-    // ==========================
-    // DONUT CHART
-    // ==========================
+    // DONUT
     const total = materialPU + labourPU + overheadPU;
     const C = 377;
 
@@ -143,63 +134,40 @@ document.addEventListener("DOMContentLoaded", function () {
     const labLen = (labourPU/total)*C;
     const ohLen = (overheadPU/total)*C;
 
-    document.getElementById("matCircle").setAttribute("stroke-dasharray", `${matLen} ${C}`);
-    document.getElementById("matCircle").setAttribute("stroke-dashoffset", "0");
+    document.getElementById("matCircle").setAttribute("stroke-dasharray",`${matLen} ${C}`);
+    document.getElementById("matCircle").setAttribute("stroke-dashoffset","0");
 
-    document.getElementById("labCircle").setAttribute("stroke-dasharray", `${labLen} ${C}`);
-    document.getElementById("labCircle").setAttribute("stroke-dashoffset", `-${matLen}`);
+    document.getElementById("labCircle").setAttribute("stroke-dasharray",`${labLen} ${C}`);
+    document.getElementById("labCircle").setAttribute("stroke-dashoffset",`-${matLen}`);
 
-    document.getElementById("ohCircle").setAttribute("stroke-dasharray", `${ohLen} ${C}`);
-    document.getElementById("ohCircle").setAttribute("stroke-dashoffset", `-${matLen + labLen}`);
+    document.getElementById("ohCircle").setAttribute("stroke-dasharray",`${ohLen} ${C}`);
+    document.getElementById("ohCircle").setAttribute("stroke-dashoffset",`-${matLen+labLen}`);
 
-    document.getElementById("centerCost").textContent =
-      "₹" + totalPU.toFixed(2);
+    document.getElementById("centerCost").textContent = "₹" + totalPU.toFixed(2);
 
-    // ==========================
-    // LEGEND %
-    // ==========================
-    document.getElementById("matPct").innerText =
-      Math.round((materialPU/total)*100) + "%";
+    document.getElementById("matPct").innerText = Math.round((materialPU/total)*100)+"%";
+    document.getElementById("labPct").innerText = Math.round((labourPU/total)*100)+"%";
+    document.getElementById("ohPct").innerText = Math.round((overheadPU/total)*100)+"%";
 
-    document.getElementById("labPct").innerText =
-      Math.round((labourPU/total)*100) + "%";
-
-    document.getElementById("ohPct").innerText =
-      Math.round((overheadPU/total)*100) + "%";
-
-    // ==========================
     // METHOD COMPARISON
-    // ==========================
-    const unitRate = oh / units;
+    const unitRate = oh/units;
+    const labourRate = oh/6000;
+    const machineRate = oh/3000;
+    const dlcRate = (oh/labour)*100;
+    const primeRate = (oh/primeCost)*100;
 
-    const labourHours = (method.value === "labour") ? base : 6000;
-    const labourRate = oh / labourHours;
+    const maxRate = Math.max(unitRate, labourRate, machineRate, dlcRate, primeRate);
 
-    const machineHours = (method.value === "machine") ? base : 3000;
-    const machineRate = oh / machineHours;
+    function drawBar(barId,textId,value,type){
 
-    const dlcRate = (oh / labour) * 100;
-    const primeRate = (oh / primeCost) * 100;
+      document.getElementById(barId).style.width=((value/maxRate)*100)+"%";
 
-    const maxRate = Math.max(
-      unitRate,
-      labourRate,
-      machineRate,
-      dlcRate,
-      primeRate
-    );
-
-    function drawBar(barId, textId, value, type){
-
-      const width = (value / maxRate) * 100;
-
-      document.getElementById(barId).style.width = width + "%";
-
-      if(type === "percent"){
-        document.getElementById(textId).innerText = value.toFixed(2) + "%";
+      if(type==="percent"){
+        document.getElementById(textId).innerText=value.toFixed(2)+"%";
       }else{
-        document.getElementById(textId).innerText = "₹" + value.toFixed(2);
+        document.getElementById(textId).innerText="₹"+value.toFixed(2);
       }
+
     }
 
     drawBar("barUnit","txtUnit",unitRate,"rupee");
@@ -211,9 +179,9 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // ==========================
-  // DOWNLOAD PDF
+  // PDF DOWNLOAD
   // ==========================
-  document.getElementById("pdfBtn").addEventListener("click", () => {
+  document.getElementById("pdfBtn").addEventListener("click",()=>{
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -221,17 +189,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const dept = document.querySelector(".dept.active");
 
     doc.setFontSize(18);
-    doc.text("OH-MASTER STUDIO", 20, 20);
+    doc.text("OH-MASTER STUDIO",20,20);
 
     doc.setFontSize(11);
-    doc.text("Overhead Absorption Cost Sheet", 20, 28);
+    doc.text("Overhead Absorption Cost Sheet",20,28);
 
     doc.line(20,32,190,32);
 
-    doc.setFontSize(12);
-    doc.text("Department : " + (dept ? dept.innerText : "Not Selected"),20,42);
-    doc.text("Method : " + method.options[method.selectedIndex].text,20,50);
-    doc.text("Date : " + new Date().toLocaleDateString(),20,58);
+    doc.text("Department : "+(dept?dept.innerText:"Not Selected"),20,42);
+    doc.text("Method : "+method.options[method.selectedIndex].text,20,50);
+    doc.text("Date : "+new Date().toLocaleDateString(),20,58);
 
     doc.line(20,64,190,64);
 
@@ -253,65 +220,76 @@ document.addEventListener("DOMContentLoaded", function () {
     doc.text("TOTAL COST / UNIT",20,126);
     doc.text(document.getElementById("totalPU").innerText,150,126);
 
-    doc.line(20,134,190,134);
-
-    doc.setFontSize(10);
-    doc.text("Generated by OH-Master Studio",20,145);
-
     doc.save("OH-Cost-Sheet.pdf");
 
   });
-  // ===================================
-// STUDENT PRACTICE MODE
-// ===================================
 
-const methods = ["Unit Method","Labour Hour Method","Machine Hour Method"];
+  // ==========================
+  // STUDENT PRACTICE MODE
+  // ==========================
+  const practiceMethods = [
+    "Unit Method",
+    "Labour Hour Method",
+    "Machine Hour Method"
+  ];
 
-document.getElementById("generateBtn").addEventListener("click", () => {
+  document.getElementById("generateBtn").addEventListener("click",()=>{
 
-  const units = [4000,5000,6000][Math.floor(Math.random()*3)];
-  const material = [480000,640000,800000][Math.floor(Math.random()*3)];
-  const labour = [320000,450000,600000][Math.floor(Math.random()*3)];
-  const overhead = [96000,108000,120000][Math.floor(Math.random()*3)];
-  const labourHours = [5000,6000,7200][Math.floor(Math.random()*3)];
-  const machineHours = [2500,3000,3600][Math.floor(Math.random()*3)];
+    const oh = [96000,108000,120000][Math.floor(Math.random()*3)];
+    const mat = [480000,640000,800000][Math.floor(Math.random()*3)];
+    const lab = [320000,450000,600000][Math.floor(Math.random()*3)];
+    const unit = [4000,5000,6000][Math.floor(Math.random()*3)];
+    const lh = [5000,6000,7200][Math.floor(Math.random()*3)];
+    const mh = [2500,3000,3600][Math.floor(Math.random()*3)];
 
-  const chosen = methods[Math.floor(Math.random()*methods.length)];
+    const chosen = practiceMethods[Math.floor(Math.random()*3)];
 
-  qOH.innerText = overhead;
-  qMat.innerText = material;
-  qLab.innerText = labour;
-  qUnits.innerText = units;
-  qLH.innerText = (chosen === "Machine Hour Method") ? machineHours : labourHours;
-  qMethod.innerText = chosen;
+    document.getElementById("qOH").innerText = oh;
+    document.getElementById("qMat").innerText = mat;
+    document.getElementById("qLab").innerText = lab;
+    document.getElementById("qUnits").innerText = unit;
 
-});
+    if(chosen==="Machine Hour Method"){
+      document.getElementById("qLH").innerText = mh;
+    }else{
+      document.getElementById("qLH").innerText = lh;
+    }
 
-document.getElementById("loadBtn").addEventListener("click", () => {
+    document.getElementById("qMethod").innerText = chosen;
 
-  oh.value = qOH.innerText;
-  material.value = qMat.innerText;
-  labour.value = qLab.innerText;
-  units.value = qUnits.innerText;
+  });
 
-  if(qMethod.innerText === "Unit Method"){
-    method.value = "unit";
-    extraLabel.innerText = "Units Produced";
-    extraInput.value = qUnits.innerText;
-  }
+  document.getElementById("loadBtn").addEventListener("click",()=>{
 
-  if(qMethod.innerText === "Labour Hour Method"){
-    method.value = "labour";
-    extraLabel.innerText = "Total Labour Hours";
-    extraInput.value = qLH.innerText;
-  }
+    document.getElementById("oh").value = document.getElementById("qOH").innerText;
+    document.getElementById("material").value = document.getElementById("qMat").innerText;
+    document.getElementById("labour").value = document.getElementById("qLab").innerText;
+    document.getElementById("units").value = document.getElementById("qUnits").innerText;
 
-  if(qMethod.innerText === "Machine Hour Method"){
-    method.value = "machine";
-    extraLabel.innerText = "Total Machine Hours";
-    extraInput.value = qLH.innerText;
-  }
+    const selected = document.getElementById("qMethod").innerText;
+    const hrs = document.getElementById("qLH").innerText;
 
-});
+    if(selected==="Unit Method"){
+      method.value="unit";
+      extraLabel.innerText="Units Produced";
+      extraInput.value=document.getElementById("qUnits").innerText;
+      extraInput.disabled=false;
+    }
+
+    if(selected==="Labour Hour Method"){
+      method.value="labour";
+      extraLabel.innerText="Total Labour Hours";
+      extraInput.value=hrs;
+      extraInput.disabled=false;
+    }
+
+    if(selected==="Machine Hour Method"){
+      method.value="machine";
+      extraLabel.innerText="Total Machine Hours";
+      extraInput.value=hrs;
+      extraInput.disabled=false;
+    }
+
+  });
 
 });
