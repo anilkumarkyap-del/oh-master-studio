@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
 
   // ==========================
@@ -116,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const totalPU = materialPU + labourPU + overheadPU;
 
-    // RESULT CARDS
+    // Result Cards
     document.getElementById("matPU").innerText = "₹" + materialPU.toFixed(2);
     document.getElementById("labPU").innerText = "₹" + labourPU.toFixed(2);
     document.getElementById("ohPU").innerText = "₹" + overheadPU.toFixed(2);
@@ -125,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("ratePU").innerText = rateText;
     document.getElementById("rateType").innerText = rateType;
 
-    // DONUT CHART
+    // Donut Chart
     const total = materialPU + labourPU + overheadPU;
     const C = 377;
 
@@ -133,40 +134,38 @@ document.addEventListener("DOMContentLoaded", function () {
     const labLen = (labourPU / total) * C;
     const ohLen = (overheadPU / total) * C;
 
-    document.getElementById("matCircle").setAttribute("stroke-dasharray", `${matLen} ${C}`);
-    document.getElementById("matCircle").setAttribute("stroke-dashoffset", "0");
-
-    document.getElementById("labCircle").setAttribute("stroke-dasharray", `${labLen} ${C}`);
-    document.getElementById("labCircle").setAttribute("stroke-dashoffset", `-${matLen}`);
-
-    document.getElementById("ohCircle").setAttribute("stroke-dasharray", `${ohLen} ${C}`);
-    document.getElementById("ohCircle").setAttribute("stroke-dashoffset", `-${matLen + labLen}`);
+    document.getElementById("matCircle").setAttribute("stroke-dasharray",`${matLen} ${C}`);
+    document.getElementById("labCircle").setAttribute("stroke-dasharray",`${labLen} ${C}`);
+    document.getElementById("labCircle").setAttribute("stroke-dashoffset",`-${matLen}`);
+    document.getElementById("ohCircle").setAttribute("stroke-dasharray",`${ohLen} ${C}`);
+    document.getElementById("ohCircle").setAttribute("stroke-dashoffset",`-${matLen+labLen}`);
 
     document.getElementById("centerCost").textContent = "₹" + totalPU.toFixed(2);
 
-    // LEGEND
+    // Legend
     document.getElementById("matPct").innerText = Math.round((materialPU/total)*100)+"%";
     document.getElementById("labPct").innerText = Math.round((labourPU/total)*100)+"%";
     document.getElementById("ohPct").innerText = Math.round((overheadPU/total)*100)+"%";
 
-    // METHOD COMPARISON
-    const unitRate = oh / units;
-    const labourRate = oh / 6000;
-    const machineRate = oh / 3000;
-    const dlcRate = (oh / labour) * 100;
-    const primeRate = (oh / primeCost) * 100;
+    // Method Comparison
+    const unitRate = oh/units;
+    const labourRate = oh/6000;
+    const machineRate = oh/3000;
+    const dlcRate = (oh/labour)*100;
+    const primeRate = (oh/primeCost)*100;
 
     const maxRate = Math.max(unitRate, labourRate, machineRate, dlcRate, primeRate);
 
-    function drawBar(barId, textId, value, type){
+    function drawBar(barId,textId,value,type){
 
-      document.getElementById(barId).style.width = ((value/maxRate)*100) + "%";
+      document.getElementById(barId).style.width = ((value/maxRate)*100)+"%";
 
       if(type==="percent"){
         document.getElementById(textId).innerText = value.toFixed(2)+"%";
       }else{
         document.getElementById(textId).innerText = "₹"+value.toFixed(2);
       }
+
     }
 
     drawBar("barUnit","txtUnit",unitRate,"rupee");
@@ -237,14 +236,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const labourHours = [5000,6000,7200][Math.floor(Math.random()*3)];
     const machineHours = [2500,3000,3600][Math.floor(Math.random()*3)];
 
-    const chosen = methods[Math.floor(Math.random()*methods.length)];
+    const chosen = methods[Math.floor(Math.random()*3)];
 
     document.getElementById("qOH").innerText = overhead;
     document.getElementById("qMat").innerText = material;
     document.getElementById("qLab").innerText = labour;
     document.getElementById("qUnits").innerText = units;
-    document.getElementById("qLH").innerText =
-      (chosen==="Machine Hour Method") ? machineHours : labourHours;
+    document.getElementById("qLH").innerText = (chosen==="Machine Hour Method") ? machineHours : labourHours;
     document.getElementById("qMethod").innerText = chosen;
 
   });
@@ -284,18 +282,18 @@ document.addEventListener("DOMContentLoaded", function () {
   // ==========================
   document.getElementById("resetBtn").addEventListener("click", () => {
 
-    // Factory defaults
-    document.getElementById("oh").value = 120000;
-    document.getElementById("material").value = 800000;
-    document.getElementById("labour").value = 600000;
-    document.getElementById("units").value = 6000;
+    // Clear Factory Setup
+    document.getElementById("oh").value = "";
+    document.getElementById("material").value = "";
+    document.getElementById("labour").value = "";
+    document.getElementById("units").value = "";
 
     method.value = "unit";
     extraLabel.innerText = "Units Produced";
+    extraInput.value = "";
     extraInput.disabled = false;
-    extraInput.value = 6000;
 
-    // Result cards
+    // Clear Result Cards
     document.getElementById("matPU").innerText = "₹0.00";
     document.getElementById("labPU").innerText = "₹0.00";
     document.getElementById("ohPU").innerText = "₹0.00";
@@ -303,18 +301,18 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("ratePU").innerText = "₹0.00";
     document.getElementById("rateType").innerText = "Per Unit";
 
-    // Donut
+    // Reset Donut
     document.getElementById("matCircle").setAttribute("stroke-dasharray","0 377");
     document.getElementById("labCircle").setAttribute("stroke-dasharray","0 377");
     document.getElementById("ohCircle").setAttribute("stroke-dasharray","0 377");
     document.getElementById("centerCost").textContent = "₹0";
 
-    // Percentages
+    // Reset Percentages
     document.getElementById("matPct").innerText = "0%";
     document.getElementById("labPct").innerText = "0%";
     document.getElementById("ohPct").innerText = "0%";
 
-    // Comparison bars
+    // Reset Method Comparison
     ["barUnit","barLabour","barMachine","barDLC","barPrime"].forEach(id=>{
       document.getElementById(id).style.width = "0%";
     });
@@ -325,7 +323,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("txtDLC").innerText = "0%";
     document.getElementById("txtPrime").innerText = "0%";
 
-    // Practice reset
+    // Clear Student Practice
     document.getElementById("qOH").innerText = "-";
     document.getElementById("qMat").innerText = "-";
     document.getElementById("qLab").innerText = "-";
