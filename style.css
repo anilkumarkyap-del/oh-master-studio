@@ -357,6 +357,9 @@ body{
    Action Buttons
 ========================== */
 
+}
+/* PDF Button */
+
 .action-buttons{
     display:flex;
     gap:15px;
@@ -370,17 +373,17 @@ body{
 
 .pdf-btn{
     flex:1;
-    background:#dc2626;
-    color:white;
+    background-color:#dc2626 !important;
+    color:#ffffff !important;
     border:none;
     border-radius:10px;
+    padding:14px;
     font-size:17px;
     font-weight:bold;
     cursor:pointer;
-    padding:14px;
-    transition:.3s;
+    transition:0.3s;
 }
 
 .pdf-btn:hover{
-    background:#b91c1c;
+    background-color:#b91c1c !important;
 }
