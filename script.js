@@ -4,6 +4,10 @@ document.addEventListener("DOMContentLoaded", function () {
  // ==========================
 // INDUSTRY SELECTION
 // ==========================
+ const method = document.getElementById("method");
+  const extraLabel = document.getElementById("extraLabel");
+  const extraInput = document.getElementById("extraInput");
+
 const departments = document.querySelectorAll(".dept");
 
 departments.forEach(btn => {
@@ -61,10 +65,7 @@ else if (industry.includes("Construction")) {
   // ==========================
   // ABSORPTION METHOD
   // ==========================
-  const method = document.getElementById("method");
-  const extraLabel = document.getElementById("extraLabel");
-  const extraInput = document.getElementById("extraInput");
-
+  
   method.addEventListener("change", () => {
 
     extraInput.disabled = false;
