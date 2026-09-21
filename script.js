@@ -19,32 +19,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
   method.addEventListener("change", () => {
 
-    if(method.value==="unit"){
-      extraLabel.innerText="Units Produced";
-      extraInput.value=6000;
-    }
+    extraInput.disabled = false;
 
-    if(method.value==="labour"){
-      extraLabel.innerText="Total Labour Hours";
-      extraInput.value=6000;
-    }
+    switch(method.value){
 
-    if(method.value==="machine"){
-      extraLabel.innerText="Total Machine Hours";
-      extraInput.value=3000;
-    }
+      case "unit":
+        extraLabel.innerText = "Units Produced";
+        extraInput.value = 6000;
+        break;
 
-    if(method.value==="dlc"){
-      extraLabel.innerText="Direct Labour Cost (₹)";
-      extraInput.value=600000;
-    }
+      case "labour":
+        extraLabel.innerText = "Total Labour Hours";
+        extraInput.value = 6000;
+        break;
 
-    if(method.value==="prime"){
-      extraLabel.innerText="Prime Cost (Auto)";
-      extraInput.value=0;
-      extraInput.disabled=true;
-    }else{
-      extraInput.disabled=false;
+      case "machine":
+        extraLabel.innerText = "Total Machine Hours";
+        extraInput.value = 3000;
+        break;
+
+      case "dlc":
+        extraLabel.innerText = "Direct Labour Cost (₹)";
+        extraInput.value = 600000;
+        break;
+
+      case "prime":
+        extraLabel.innerText = "Prime Cost (Auto)";
+        extraInput.value = "";
+        extraInput.placeholder = "Calculated Automatically";
+        extraInput.disabled = true;
+        break;
     }
 
   });
@@ -97,30 +101,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const totalPU = materialPU + labourPU + overheadPU;
 
-    // ===== KPI Cards =====
-    document.getElementById("matPU").innerText =
-      "₹" + materialPU.toFixed(2);
-
-    document.getElementById("labPU").innerText =
-      "₹" + labourPU.toFixed(2);
-
-    document.getElementById("ohPU").innerText =
-      "₹" + overheadPU.toFixed(2);
-
-    document.getElementById("totalPU").innerText =
-      "₹" + totalPU.toFixed(2);
+    // ===== KPI =====
+    document.getElementById("matPU").innerText = "₹" + materialPU.toFixed(2);
+    document.getElementById("labPU").innerText = "₹" + labourPU.toFixed(2);
+    document.getElementById("ohPU").innerText = "₹" + overheadPU.toFixed(2);
+    document.getElementById("totalPU").innerText = "₹" + totalPU.toFixed(2);
 
     // ===== OH Rate Card =====
-    if(method.value==="dlc" || method.value==="prime"){
-      document.getElementById("ratePU").innerText =
-        rate.toFixed(2) + "%";
-      document.getElementById("rateType").innerText =
-        "Absorption Rate";
+    const ratePU = document.getElementById("ratePU");
+    const rateType = document.getElementById("rateType");
+
+    if(method.value === "dlc" || method.value === "prime"){
+      ratePU.innerText = rate.toFixed(2) + "%";
+      rateType.innerText = "Absorption Rate";
     }else{
-      document.getElementById("ratePU").innerText =
-        "₹" + rate.toFixed(2);
-      document.getElementById("rateType").innerText =
-        "Per Hour / Unit";
+      ratePU.innerText = "₹" + rate.toFixed(2);
+      rateType.innerText = "Rate per Hour / Unit";
     }
 
     // ===== Donut Chart =====
@@ -131,30 +127,32 @@ document.addEventListener("DOMContentLoaded", function () {
     const labLen = (labourPU/total)*C;
     const ohLen = (overheadPU/total)*C;
 
-    const mat = document.getElementById("matCircle");
-    const lab = document.getElementById("labCircle");
-    const ohc = document.getElementById("ohCircle");
+    document.getElementById("matCircle")
+      .setAttribute("stroke-dasharray", `${matLen} ${C}`);
 
-    mat.setAttribute("stroke-dasharray", `${matLen} ${C}`);
-    mat.setAttribute("stroke-dashoffset", "0");
+    document.getElementById("labCircle")
+      .setAttribute("stroke-dasharray", `${labLen} ${C}`);
 
-    lab.setAttribute("stroke-dasharray", `${labLen} ${C}`);
-    lab.setAttribute("stroke-dashoffset", `-${matLen}`);
+    document.getElementById("labCircle")
+      .setAttribute("stroke-dashoffset", `-${matLen}`);
 
-    ohc.setAttribute("stroke-dasharray", `${ohLen} ${C}`);
-    ohc.setAttribute("stroke-dashoffset", `-${matLen + labLen}`);
+    document.getElementById("ohCircle")
+      .setAttribute("stroke-dasharray", `${ohLen} ${C}`);
+
+    document.getElementById("ohCircle")
+      .setAttribute("stroke-dashoffset", `-${matLen + labLen}`);
 
     document.getElementById("centerCost").textContent =
       "₹" + totalPU.toFixed(0);
 
-    // ===== Percentage Legend =====
-    document.getElementById("matPct").textContent =
+    // ===== Legend % =====
+    document.getElementById("matPct").innerText =
       Math.round((materialPU/total)*100) + "%";
 
-    document.getElementById("labPct").textContent =
+    document.getElementById("labPct").innerText =
       Math.round((labourPU/total)*100) + "%";
 
-    document.getElementById("ohPct").textContent =
+    document.getElementById("ohPct").innerText =
       Math.round((overheadPU/total)*100) + "%";
 
   });
