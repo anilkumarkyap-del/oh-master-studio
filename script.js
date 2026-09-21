@@ -71,6 +71,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let overheadPU = 0;
     let rate = 0;
+    let rateText = "";
+    let rateType = "";
 
     const base = Number(extraInput.value);
 
@@ -82,26 +84,36 @@ document.addEventListener("DOMContentLoaded", function () {
       case "unit":
         rate = oh / units;
         overheadPU = rate;
+        rateText = "₹" + rate.toFixed(2);
+        rateType = "Per Unit";
         break;
 
       case "labour":
         rate = oh / base;
         overheadPU = rate;
+        rateText = "₹" + rate.toFixed(2);
+        rateType = "Per Labour Hour";
         break;
 
       case "machine":
         rate = oh / base;
         overheadPU = rate;
+        rateText = "₹" + rate.toFixed(2);
+        rateType = "Per Machine Hour";
         break;
 
       case "dlc":
         rate = (oh / labour) * 100;
         overheadPU = (oh / labour) * labourPU;
+        rateText = rate.toFixed(2) + "%";
+        rateType = "Direct Labour %";
         break;
 
       case "prime":
         rate = (oh / primeCost) * 100;
         overheadPU = (oh / primeCost) * (materialPU + labourPU);
+        rateText = rate.toFixed(2) + "%";
+        rateType = "Prime Cost %";
         break;
     }
 
@@ -125,33 +137,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // ==========================
     // OH Rate Card
     // ==========================
-    if(method.value === "dlc"){
-
-      document.getElementById("ratePU").innerText =
-        ((oh / labour) * 100).toFixed(2) + "%";
-
-      document.getElementById("rateType").innerText =
-        "Direct Labour %";
-
-    }
-    else if(method.value === "prime"){
-
-      document.getElementById("ratePU").innerText =
-        ((oh / primeCost) * 100).toFixed(2) + "%";
-
-      document.getElementById("rateType").innerText =
-        "Prime Cost %";
-
-    }
-    else{
-
-      document.getElementById("ratePU").innerText =
-        "₹" + rate.toFixed(2);
-
-      document.getElementById("rateType").innerText =
-        "Per Hour / Unit";
-
-    }
+    document.getElementById("ratePU").innerText = rateText;
+    document.getElementById("rateType").innerText = rateType;
 
     // ==========================
     // Donut Chart
@@ -163,20 +150,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const labLen = (labourPU / total) * C;
     const ohLen = (overheadPU / total) * C;
 
-    document.getElementById("matCircle")
-      .setAttribute("stroke-dasharray", `${matLen} ${C}`);
+    const matCircle = document.getElementById("matCircle");
+    const labCircle = document.getElementById("labCircle");
+    const ohCircle = document.getElementById("ohCircle");
 
-    document.getElementById("labCircle")
-      .setAttribute("stroke-dasharray", `${labLen} ${C}`);
+    matCircle.setAttribute("stroke-dasharray", `${matLen} ${C}`);
+    matCircle.setAttribute("stroke-dashoffset", "0");
 
-    document.getElementById("labCircle")
-      .setAttribute("stroke-dashoffset", `-${matLen}`);
+    labCircle.setAttribute("stroke-dasharray", `${labLen} ${C}`);
+    labCircle.setAttribute("stroke-dashoffset", `-${matLen}`);
 
-    document.getElementById("ohCircle")
-      .setAttribute("stroke-dasharray", `${ohLen} ${C}`);
-
-    document.getElementById("ohCircle")
-      .setAttribute("stroke-dashoffset", `-${matLen + labLen}`);
+    ohCircle.setAttribute("stroke-dasharray", `${ohLen} ${C}`);
+    ohCircle.setAttribute("stroke-dashoffset", `-${matLen + labLen}`);
 
     document.getElementById("centerCost").innerText =
       "₹" + totalPU.toFixed(0);
