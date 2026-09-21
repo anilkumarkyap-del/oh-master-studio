@@ -57,7 +57,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const materialPU = material / units;
     const labourPU = labour / units;
 
-    let overheadPU = 0;
+   let overheadPU = 0;
+let rate = 0;
     const base = Number(extraInput.value);
 
     switch(method.value){
