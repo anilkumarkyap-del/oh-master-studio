@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
 
   // ==========================
@@ -53,11 +54,10 @@ document.addEventListener("DOMContentLoaded", function () {
         extraInput.placeholder = "Calculated Automatically";
         break;
     }
-
   });
 
   // ==========================
-  // Calculate Button
+  // CALCULATE BUTTON
   // ==========================
   document.querySelector(".simulate-btn").addEventListener("click", () => {
 
@@ -83,48 +83,38 @@ document.addEventListener("DOMContentLoaded", function () {
     switch(method.value){
 
       case "unit":
-
         rate = oh / units;
         overheadPU = rate;
-
         rateText = "₹" + rate.toFixed(2);
         rateType = "Per Unit";
         break;
 
       case "labour":
-
         rate = oh / base;
         const labourHourPerUnit = base / units;
         overheadPU = rate * labourHourPerUnit;
-
         rateText = "₹" + rate.toFixed(2);
         rateType = "Per Labour Hour";
         break;
 
       case "machine":
-
         rate = oh / base;
         const machineHourPerUnit = base / units;
         overheadPU = rate * machineHourPerUnit;
-
         rateText = "₹" + rate.toFixed(2);
         rateType = "Per Machine Hour";
         break;
 
       case "dlc":
-
         rate = (oh / labour) * 100;
         overheadPU = (oh / labour) * labourPU;
-
         rateText = rate.toFixed(2) + "%";
         rateType = "Direct Labour %";
         break;
 
       case "prime":
-
         rate = (oh / primeCost) * 100;
         overheadPU = (oh / primeCost) * (materialPU + labourPU);
-
         rateText = rate.toFixed(2) + "%";
         rateType = "Prime Cost %";
         break;
@@ -179,9 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ==========================
     // METHOD COMPARISON
-    // (ABSORPTION RATES)
     // ==========================
-
     const unitRate = oh / units;
 
     const labourHours = (method.value === "labour") ? base : 6000;
@@ -214,67 +202,63 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
 
-    drawBar("barUnit", "txtUnit", unitRate, "rupee");
-    drawBar("barLabour", "txtLabour", labourRate, "rupee");
-    drawBar("barMachine", "txtMachine", machineRate, "rupee");
-    drawBar("barDLC", "txtDLC", dlcRate, "percent");
-    drawBar("barPrime", "txtPrime", primeRate, "percent");
-    // ==========================
-// DOWNLOAD PDF
-// ==========================
+    drawBar("barUnit","txtUnit",unitRate,"rupee");
+    drawBar("barLabour","txtLabour",labourRate,"rupee");
+    drawBar("barMachine","txtMachine",machineRate,"rupee");
+    drawBar("barDLC","txtDLC",dlcRate,"percent");
+    drawBar("barPrime","txtPrime",primeRate,"percent");
 
-document.getElementById("pdfBtn").addEventListener("click", () => {
+  });
 
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+  // ==========================
+  // DOWNLOAD PDF
+  // ==========================
+  document.getElementById("pdfBtn").addEventListener("click", () => {
 
-  // Heading
-  doc.setFontSize(18);
-  doc.text("OH-MASTER STUDIO", 20, 20);
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-  doc.setFontSize(11);
-  doc.text("Overhead Absorption Cost Sheet", 20, 28);
+    const dept = document.querySelector(".dept.active");
 
-  // Line
-  doc.line(20,32,190,32);
+    doc.setFontSize(18);
+    doc.text("OH-MASTER STUDIO", 20, 20);
 
-  // Factory details
-  doc.setFontSize(12);
-  doc.text("Department : " + document.querySelector(".dept.active")?.innerText || "Not Selected",20,42);
+    doc.setFontSize(11);
+    doc.text("Overhead Absorption Cost Sheet", 20, 28);
 
-  doc.text("Method : " + method.options[method.selectedIndex].text,20,50);
+    doc.line(20,32,190,32);
 
-  doc.text("Date : " + new Date().toLocaleDateString(),20,58);
+    doc.setFontSize(12);
+    doc.text("Department : " + (dept ? dept.innerText : "Not Selected"),20,42);
+    doc.text("Method : " + method.options[method.selectedIndex].text,20,50);
+    doc.text("Date : " + new Date().toLocaleDateString(),20,58);
 
-  // Cost sheet
-  doc.line(20,64,190,64);
+    doc.line(20,64,190,64);
 
-  doc.text("Material / Unit",20,76);
-  doc.text(document.getElementById("matPU").innerText,150,76);
+    doc.text("Material / Unit",20,76);
+    doc.text(document.getElementById("matPU").innerText,150,76);
 
-  doc.text("Labour / Unit",20,86);
-  doc.text(document.getElementById("labPU").innerText,150,86);
+    doc.text("Labour / Unit",20,86);
+    doc.text(document.getElementById("labPU").innerText,150,86);
 
-  doc.text("Overhead / Unit",20,96);
-  doc.text(document.getElementById("ohPU").innerText,150,96);
+    doc.text("Overhead / Unit",20,96);
+    doc.text(document.getElementById("ohPU").innerText,150,96);
 
-  doc.text("OH Rate",20,106);
-  doc.text(document.getElementById("ratePU").innerText,150,106);
+    doc.text("OH Rate",20,106);
+    doc.text(document.getElementById("ratePU").innerText,150,106);
 
-  doc.line(20,114,190,114);
+    doc.line(20,114,190,114);
 
-  doc.setFontSize(14);
-  doc.text("TOTAL COST / UNIT",20,126);
-  doc.text(document.getElementById("totalPU").innerText,150,126);
+    doc.setFontSize(14);
+    doc.text("TOTAL COST / UNIT",20,126);
+    doc.text(document.getElementById("totalPU").innerText,150,126);
 
-  doc.line(20,134,190,134);
+    doc.line(20,134,190,134);
 
-  doc.setFontSize(10);
-  doc.text("Generated by OH-Master Studio",20,145);
+    doc.setFontSize(10);
+    doc.text("Generated by OH-Master Studio",20,145);
 
-  doc.save("OH-Cost-Sheet.pdf");
-
-});
+    doc.save("OH-Cost-Sheet.pdf");
 
   });
 
