@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-  // ==========================
+  // --------------------------
   // Department Selection
-  // ==========================
+  // --------------------------
   const departments = document.querySelectorAll(".dept");
 
   departments.forEach(btn => {
@@ -12,9 +12,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // ==========================
+  // --------------------------
   // Absorption Method
-  // ==========================
+  // --------------------------
   const method = document.getElementById("method");
   const extraLabel = document.getElementById("extraLabel");
   const extraInput = document.getElementById("extraInput");
@@ -55,9 +55,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   });
 
-  // ==========================
+  // --------------------------
   // Calculate Button
-  // ==========================
+  // --------------------------
   document.querySelector(".simulate-btn").addEventListener("click", () => {
 
     const oh = Number(document.getElementById("oh").value);
@@ -76,9 +76,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const base = Number(extraInput.value);
 
-    // ==========================
+    // --------------------------
     // Absorption Methods
-    // ==========================
+    // --------------------------
     switch(method.value){
 
       case "unit":
@@ -89,29 +89,45 @@ document.addEventListener("DOMContentLoaded", function () {
         break;
 
       case "labour":
+
         rate = oh / base;
-        overheadPU = rate;
+
+        const labourHourPerUnit = base / units;
+
+        overheadPU = rate * labourHourPerUnit;
+
         rateText = "₹" + rate.toFixed(2);
         rateType = "Per Labour Hour";
         break;
 
       case "machine":
+
         rate = oh / base;
-        overheadPU = rate;
+
+        const machineHourPerUnit = base / units;
+
+        overheadPU = rate * machineHourPerUnit;
+
         rateText = "₹" + rate.toFixed(2);
         rateType = "Per Machine Hour";
         break;
 
       case "dlc":
+
         rate = (oh / labour) * 100;
+
         overheadPU = (oh / labour) * labourPU;
+
         rateText = rate.toFixed(2) + "%";
         rateType = "Direct Labour %";
         break;
 
       case "prime":
+
         rate = (oh / primeCost) * 100;
+
         overheadPU = (oh / primeCost) * (materialPU + labourPU);
+
         rateText = rate.toFixed(2) + "%";
         rateType = "Prime Cost %";
         break;
@@ -119,70 +135,63 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const totalPU = materialPU + labourPU + overheadPU;
 
-    // ==========================
+    // --------------------------
     // KPI Cards
-    // ==========================
+    // --------------------------
     document.getElementById("matPU").innerText = "₹" + materialPU.toFixed(2);
     document.getElementById("labPU").innerText = "₹" + labourPU.toFixed(2);
     document.getElementById("ohPU").innerText = "₹" + overheadPU.toFixed(2);
     document.getElementById("totalPU").innerText = "₹" + totalPU.toFixed(2);
 
-    // OH Rate
+    // OH Rate Card
     document.getElementById("ratePU").innerText = rateText;
     document.getElementById("rateType").innerText = rateType;
 
-    // ==========================
+    // --------------------------
     // Donut Chart
-    // ==========================
+    // --------------------------
     const total = materialPU + labourPU + overheadPU;
     const C = 377;
 
-    const matLen = (materialPU / total) * C;
-    const labLen = (labourPU / total) * C;
-    const ohLen = (overheadPU / total) * C;
+    const matLen = (materialPU/total)*C;
+    const labLen = (labourPU/total)*C;
+    const ohLen = (overheadPU/total)*C;
 
-    document.getElementById("matCircle")
-      .setAttribute("stroke-dasharray", `${matLen} ${C}`);
+    document.getElementById("matCircle").setAttribute("stroke-dasharray",`${matLen} ${C}`);
+    document.getElementById("matCircle").setAttribute("stroke-dashoffset","0");
 
-    document.getElementById("matCircle")
-      .setAttribute("stroke-dashoffset", "0");
+    document.getElementById("labCircle").setAttribute("stroke-dasharray",`${labLen} ${C}`);
+    document.getElementById("labCircle").setAttribute("stroke-dashoffset",`-${matLen}`);
 
-    document.getElementById("labCircle")
-      .setAttribute("stroke-dasharray", `${labLen} ${C}`);
+    document.getElementById("ohCircle").setAttribute("stroke-dasharray",`${ohLen} ${C}`);
+    document.getElementById("ohCircle").setAttribute("stroke-dashoffset",`-${matLen+labLen}`);
 
-    document.getElementById("labCircle")
-      .setAttribute("stroke-dashoffset", `-${matLen}`);
+    document.getElementById("centerCost").textContent = "₹"+totalPU.toFixed(2);
 
-    document.getElementById("ohCircle")
-      .setAttribute("stroke-dasharray", `${ohLen} ${C}`);
+    // --------------------------
+    // Legend %
+    // --------------------------
+    document.getElementById("matPct").innerText = Math.round((materialPU/total)*100)+"%";
+    document.getElementById("labPct").innerText = Math.round((labourPU/total)*100)+"%";
+    document.getElementById("ohPct").innerText = Math.round((overheadPU/total)*100)+"%";
 
-    document.getElementById("ohCircle")
-      .setAttribute("stroke-dashoffset", `-${matLen + labLen}`);
+    // --------------------------
+    // Method Comparison
+    // --------------------------
 
-   document.getElementById("centerCost").textContent =
-  "₹" + totalPU.toFixed(2);
+    const unitValue = oh/units;
 
-    // ==========================
-    // Percentage Legend
-    // ==========================
-    document.getElementById("matPct").innerText =
-      Math.round((materialPU / total) * 100) + "%";
+    const labourRate = oh/6000;
+    const labourPerUnit = 6000/units;
+    const labourValue = labourRate*labourPerUnit;
 
-    document.getElementById("labPct").innerText =
-      Math.round((labourPU / total) * 100) + "%";
+    const machineRate = oh/3000;
+    const machinePerUnit = 3000/units;
+    const machineValue = machineRate*machinePerUnit;
 
-    document.getElementById("ohPct").innerText =
-      Math.round((overheadPU / total) * 100) + "%";
+    const dlcValue = (oh/labour)*labourPU;
 
-    // ==========================
-    // METHOD COMPARISON CHART
-    // ==========================
-
-    const unitValue = oh / units;
-    const labourValue = oh / 6000;
-    const machineValue = oh / 3000;
-    const dlcValue = (oh / labour) * labourPU;
-    const primeValue = (oh / primeCost) * (materialPU + labourPU);
+    const primeValue = (oh/primeCost)*(materialPU+labourPU);
 
     const maxValue = Math.max(
       unitValue,
@@ -192,14 +201,14 @@ document.addEventListener("DOMContentLoaded", function () {
       primeValue
     );
 
-    function drawBar(barId, textId, value){
+    function drawBar(barId,textId,value){
 
-      const width = (value / maxValue) * 100;
+      const width = (value/maxValue)*100;
 
-      document.getElementById(barId).style.width = width + "%";
+      document.getElementById(barId).style.width = width+"%";
 
-      document.getElementById(textId).innerText =
-        "₹" + value.toFixed(2);
+      document.getElementById(textId).innerText = "₹"+value.toFixed(2);
+
     }
 
     drawBar("barUnit","txtUnit",unitValue);
