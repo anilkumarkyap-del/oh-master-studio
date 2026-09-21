@@ -39,13 +39,13 @@ if (industry.includes("Garment")) {
       extraInput.value = 3000;
     }
 
-    // 🏗️ Construction → Labour Hour
-    else if (industry.includes("Construction")) {
-      method.value = "labour";
-      extraLabel.innerText = "Total Labour Hours";
-      extraInput.disabled = false;
-      extraInput.value = 6000;
-    }
+   // 🏗️ Construction → Direct Labour Cost %
+else if (industry.includes("Construction")) {
+  method.value = "dlc";
+  extraLabel.innerText = "Direct Labour Cost (₹)";
+  extraInput.disabled = false;
+  extraInput.value = document.getElementById("labour").value;
+}
 
     // 🏭 Steel Fabrication → Prime Cost %
     else if (industry.includes("Steel")) {
