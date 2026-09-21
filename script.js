@@ -159,8 +159,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("ohCircle")
       .setAttribute("stroke-dashoffset", `-${matLen + labLen}`);
 
-    document.getElementById("centerCost").innerText =
-      "₹" + totalPU.toFixed(0);
+   document.getElementById("centerCost").textContent =
+  "₹" + totalPU.toFixed(2);
 
     // ==========================
     // Percentage Legend
