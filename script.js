@@ -218,6 +218,19 @@ else if (industry.includes("Construction")) {
     drawBar("barMachine","txtMachine",machineRate,"rupee");
     drawBar("barDLC","txtDLC",dlcRate,"percent");
     drawBar("barPrime","txtPrime",primeRate,"percent");
+   // REPORT HISTORY
+const industry =
+document.querySelector(".dept.active")?.innerText || "Not Selected";
+
+const history = document.querySelector("#historyTable tbody");
+
+const row = history.insertRow();
+
+row.insertCell(0).innerText = industry;
+row.insertCell(1).innerText =
+method.options[method.selectedIndex].text;
+row.insertCell(2).innerText =
+"₹" + totalPU.toFixed(2);
 
   });
 
