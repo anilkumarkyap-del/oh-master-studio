@@ -403,6 +403,93 @@ document.getElementById("qtyBtn").addEventListener("click", () => {
   document.getElementById("grandTotal").innerText = "₹" + grandTotal.toFixed(2);
 
 });
+ // ==========================
+// OVERHEAD ABSORPTION CALCULATOR
+// ==========================
+
+// Change input label according to selected method
+method.addEventListener("change", () => {
+
+  switch(method.value){
+
+    case "unit":
+      document.getElementById("absorbLabel").innerText = "Enter Units";
+      break;
+
+    case "labour":
+      document.getElementById("absorbLabel").innerText = "Enter Labour Hours";
+      break;
+
+    case "machine":
+      document.getElementById("absorbLabel").innerText = "Enter Machine Hours";
+      break;
+
+    case "dlc":
+      document.getElementById("absorbLabel").innerText = "Enter Labour Cost (₹)";
+      break;
+
+    case "prime":
+      document.getElementById("absorbLabel").innerText = "Enter Prime Cost (₹)";
+      break;
+  }
+
+});
+
+// Calculate Overhead Absorbed
+document.getElementById("absorbBtn").addEventListener("click", () => {
+
+  const input = Number(document.getElementById("absorbInput").value);
+  const oh = Number(document.getElementById("oh").value);
+  const labour = Number(document.getElementById("labour").value);
+  const material = Number(document.getElementById("material").value);
+  const units = Number(document.getElementById("units").value);
+  const base = Number(extraInput.value);
+
+  if(input <= 0){
+    alert("Please enter a valid value.");
+    return;
+  }
+
+  let rate = 0;
+  let absorbed = 0;
+
+  switch(method.value){
+
+    case "unit":
+      rate = oh / units;
+      absorbed = rate * input;
+      document.getElementById("displayRate").innerText = "₹" + rate.toFixed(2) + "/Unit";
+      break;
+
+    case "labour":
+      rate = oh / base;
+      absorbed = rate * input;
+      document.getElementById("displayRate").innerText = "₹" + rate.toFixed(2) + "/Hr";
+      break;
+
+    case "machine":
+      rate = oh / base;
+      absorbed = rate * input;
+      document.getElementById("displayRate").innerText = "₹" + rate.toFixed(2) + "/Hr";
+      break;
+
+    case "dlc":
+      rate = (oh / labour) * 100;
+      absorbed = (rate / 100) * input;
+      document.getElementById("displayRate").innerText = rate.toFixed(2) + "%";
+      break;
+
+    case "prime":
+      rate = (oh / (material + labour)) * 100;
+      absorbed = (rate / 100) * input;
+      document.getElementById("displayRate").innerText = rate.toFixed(2) + "%";
+      break;
+  }
+
+  document.getElementById("absorbedOH").innerText =
+    "₹" + absorbed.toFixed(2);
+
+});
   // ==========================
   // RESET BUTTON
   // ==========================
