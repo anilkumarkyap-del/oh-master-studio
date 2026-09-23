@@ -162,24 +162,24 @@
 
       </div>
 <!-- ==========================
-     PRODUCTION COST CALCULATOR
+     OVERHEAD ABSORPTION CALCULATOR
 ========================== -->
 
 <div class="production-panel">
 
-  <h2>Production Cost Calculator</h2>
-  <p class="subtitle">Calculate total cost for any production quantity</p>
+  <h2>Overhead Absorption Calculator</h2>
+  <p class="subtitle">Calculate overhead absorbed using the selected method</p>
 
   <div class="factory-grid">
 
     <div class="input-box">
-      <label>Required Quantity</label>
-      <input type="number" id="qty" placeholder="Enter quantity (e.g. 50)">
+      <label id="absorbLabel">Enter Units</label>
+      <input type="number" id="absorbInput" placeholder="Enter value">
     </div>
 
     <div class="input-box" style="justify-content:end;">
-      <button id="qtyBtn" class="simulate-btn" style="margin-top:28px;">
-        Calculate Production Cost
+      <button id="absorbBtn" class="simulate-btn" style="margin-top:28px;">
+        Calculate Overhead
       </button>
     </div>
 
@@ -188,23 +188,13 @@
   <div class="results">
 
     <div class="result-card">
-      <h4>Material Cost</h4>
-      <h2 id="matTotal">₹0.00</h2>
-    </div>
-
-    <div class="result-card">
-      <h4>Labour Cost</h4>
-      <h2 id="labTotal">₹0.00</h2>
-    </div>
-
-    <div class="result-card">
-      <h4>Overhead Cost</h4>
-      <h2 id="ohTotal">₹0.00</h2>
+      <h4>OH Rate</h4>
+      <h2 id="displayRate">₹0.00</h2>
     </div>
 
     <div class="result-card total">
-      <h4>Total Production Cost</h4>
-      <h2 id="grandTotal">₹0.00</h2>
+      <h4>Overhead Absorbed</h4>
+      <h2 id="absorbedOH">₹0.00</h2>
     </div>
 
   </div>
