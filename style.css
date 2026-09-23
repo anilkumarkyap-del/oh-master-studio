@@ -600,3 +600,25 @@ body{
     font-size:24px;
   }
 }
+/* ==========================
+   PRODUCTION COST CALCULATOR
+========================== */
+
+.production-panel{
+    background:#ffffff;
+    margin-top:25px;
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+.production-panel h2{
+    color:#1e3a8a;
+    margin-bottom:8px;
+}
+
+.production-panel .subtitle{
+    color:#64748b;
+    margin-bottom:18px;
+    font-size:14px;
+}
