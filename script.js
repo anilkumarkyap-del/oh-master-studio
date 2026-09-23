@@ -239,7 +239,7 @@ row.insertCell(2).innerText =
 
   });
 
- // ==========================
+// ==========================
 // PDF DOWNLOAD
 // ==========================
 document.getElementById("pdfBtn").addEventListener("click", () => {
@@ -250,114 +250,165 @@ document.getElementById("pdfBtn").addEventListener("click", () => {
   const industry = document.querySelector(".dept.active")?.innerText || "Not Selected";
   const methodName = method.options[method.selectedIndex].text;
 
-  let y = 20;
+  let y = 18;
 
-  // HEADER
-  doc.setFontSize(18);
-  doc.text("EduCost Simulator", 20, y);
+  // ---------- Page Helper ----------
+  function checkPage() {
+    if (y > 270) {
+      doc.addPage();
+      y = 20;
+    }
+  }
+
+  // ---------- HEADER ----------
+  doc.setFillColor(30, 64, 175);
+  doc.rect(0, 0, 210, 28, "F");
+
+  doc.setTextColor(255,255,255);
+  doc.setFontSize(20);
+  doc.text("EduCost Simulator",20,14);
+
+  doc.setFontSize(10);
+  doc.text("Interactive Overhead Absorption Simulator",20,22);
+
+  doc.setTextColor(0,0,0);
+  y = 38;
+
+  // ---------- INDUSTRY DETAILS ----------
+  doc.setFontSize(14);
+  doc.text("Industry Details",20,y);
 
   y += 8;
   doc.setFontSize(11);
-  doc.text("Interactive Overhead Absorption Simulator",20,y);
+  doc.text("Industry",20,y);
+  doc.text(industry,90,y);
 
-  y += 8;
-  doc.line(20,y,190,y);
+  y += 7;
+  doc.text("Method",20,y);
+  doc.text(methodName,90,y);
 
-  // INDUSTRY
-  y += 10;
-  doc.setFontSize(12);
-  doc.text("Industry : " + industry,20,y);
+  y += 7;
+  doc.text("Date & Time",20,y);
+  doc.text(new Date().toLocaleString(),90,y);
 
-  y += 8;
-  doc.text("Method : " + methodName,20,y);
-
-  y += 8;
-  doc.text("Date : " + new Date().toLocaleString(),20,y);
-
-  // FACTORY SETUP
+  // ---------- FACTORY SETUP ----------
+  checkPage();
   y += 12;
-  doc.setFontSize(14);
+
+  doc.setFillColor(219,234,254);
+  doc.rect(18,y-6,174,8,"F");
+  doc.setFontSize(13);
   doc.text("Factory Setup",20,y);
 
-  y += 8;
+  y += 10;
   doc.setFontSize(11);
-  doc.text("Factory Overheads : Rs. " + document.getElementById("oh").value,20,y);
+
+  doc.text("Factory Overheads",20,y);
+  doc.text("Rs. " + document.getElementById("oh").value,120,y);
 
   y += 7;
-  doc.text("Direct Material : Rs. " + document.getElementById("material").value,20,y);
+  doc.text("Direct Material",20,y);
+  doc.text("Rs. " + document.getElementById("material").value,120,y);
 
   y += 7;
-  doc.text("Direct Labour : Rs. " + document.getElementById("labour").value,20,y);
+  doc.text("Direct Labour",20,y);
+  doc.text("Rs. " + document.getElementById("labour").value,120,y);
 
   y += 7;
-  doc.text("Units Produced : " + document.getElementById("units").value,20,y);
+  doc.text("Units Produced",20,y);
+  doc.text(document.getElementById("units").value,120,y);
 
   y += 7;
-  doc.text(extraLabel.innerText + " : " + extraInput.value,20,y);
+  doc.text(extraLabel.innerText,20,y);
+  doc.text(extraInput.value || "-",120,y);
 
-  // COST SHEET
+  // ---------- COST SHEET ----------
+  checkPage();
   y += 12;
-  doc.setFontSize(14);
+
+  doc.setFillColor(220,252,231);
+  doc.rect(18,y-6,174,8,"F");
+  doc.setFontSize(13);
   doc.text("Cost Sheet (Per Unit)",20,y);
 
-  y += 8;
+  y += 10;
+  doc.setDrawColor(180);
+  doc.line(20,y,190,y);
+
+  y += 6;
   doc.setFontSize(11);
-  doc.text("Material / Unit : " + document.getElementById("matPU").innerText,20,y);
+  doc.text("Particulars",22,y);
+  doc.text("Amount",145,y);
 
-  y += 7;
-  doc.text("Labour / Unit : " + document.getElementById("labPU").innerText,20,y);
+  y += 3;
+  doc.line(20,y,190,y);
 
-  y += 7;
-  doc.text("Overhead / Unit : " + document.getElementById("ohPU").innerText,20,y);
+  function row(label,value){
+    y += 8;
+    doc.text(label,22,y);
+    doc.text(value,145,y);
+  }
 
-  y += 7;
-  doc.text("OH Rate : " + document.getElementById("ratePU").innerText + " (" + document.getElementById("rateType").innerText + ")",20,y);
+  row("Material / Unit",document.getElementById("matPU").innerText);
+  row("Labour / Unit",document.getElementById("labPU").innerText);
+  row("Overhead / Unit",document.getElementById("ohPU").innerText);
+  row("OH Rate",document.getElementById("ratePU").innerText);
+  row("Rate Type",document.getElementById("rateType").innerText);
 
-  y += 7;
-  doc.setFontSize(12);
-  doc.text("Total Cost / Unit : " + document.getElementById("totalPU").innerText,20,y);
-
-  // OVERHEAD ABSORPTION
-  y += 12;
-  doc.setFontSize(14);
-  doc.text("Overhead Absorption Calculator",20,y);
+  y += 5;
+  doc.line(20,y,190,y);
 
   y += 8;
-  doc.setFontSize(11);
-  doc.text(document.getElementById("absorbLabel").innerText + " : " + (document.getElementById("absorbInput").value || "-"),20,y);
-
-  y += 7;
-  doc.text("OH Rate : " + document.getElementById("displayRate").innerText,20,y);
-
-  y += 7;
   doc.setFontSize(12);
-  doc.text("Overhead Absorbed : " + document.getElementById("absorbedOH").innerText,20,y);
+  doc.text("TOTAL COST / UNIT",22,y);
+  doc.text(document.getElementById("totalPU").innerText,145,y);
 
-  // METHOD COMPARISON
-  y += 12;
-  doc.setFontSize(14);
+  // ---------- NEW PAGE ----------
+  doc.addPage();
+  y = 20;
+
+  // ---------- OVERHEAD ABSORPTION ----------
+  doc.setFillColor(254,243,199);
+  doc.rect(18,14,174,8,"F");
+  doc.setFontSize(13);
+  doc.text("Overhead Absorption Calculator",20,20);
+
+  y = 34;
+  doc.setFontSize(11);
+
+  doc.text(document.getElementById("absorbLabel").innerText,20,y);
+  doc.text(document.getElementById("absorbInput").value || "-",120,y);
+
+  y += 8;
+  doc.text("OH Rate",20,y);
+  doc.text(document.getElementById("displayRate").innerText,120,y);
+
+  y += 8;
+  doc.setFontSize(12);
+  doc.text("Overhead Absorbed",20,y);
+  doc.text(document.getElementById("absorbedOH").innerText,120,y);
+
+  // ---------- METHOD COMPARISON ----------
+  y += 18;
+
+  doc.setFillColor(224,231,255);
+  doc.rect(18,y-6,174,8,"F");
+  doc.setFontSize(13);
   doc.text("Method Comparison",20,y);
 
-  y += 8;
+  y += 10;
   doc.setFontSize(11);
-  doc.text("Unit Method : " + document.getElementById("txtUnit").innerText,20,y);
 
-  y += 7;
-  doc.text("Labour Hour : " + document.getElementById("txtLabour").innerText,20,y);
+  row("Unit Method",document.getElementById("txtUnit").innerText);
+  row("Labour Hour",document.getElementById("txtLabour").innerText);
+  row("Machine Hour",document.getElementById("txtMachine").innerText);
+  row("Direct Labour %",document.getElementById("txtDLC").innerText);
+  row("Prime Cost %",document.getElementById("txtPrime").innerText);
 
-  y += 7;
-  doc.text("Machine Hour : " + document.getElementById("txtMachine").innerText,20,y);
-
-  y += 7;
-  doc.text("Direct Labour % : " + document.getElementById("txtDLC").innerText,20,y);
-
-  y += 7;
-  doc.text("Prime Cost % : " + document.getElementById("txtPrime").innerText,20,y);
-
-  // FOOTER
-  y += 15;
-  doc.setFontSize(10);
-  doc.text("Generated by EduCost Simulator",20,y);
+  // ---------- FOOTER ----------
+  doc.setFontSize(9);
+  doc.setTextColor(100);
+  doc.text("Generated by EduCost Simulator",20,285);
 
   doc.save("EduCost_Simulator_Report.pdf");
 
