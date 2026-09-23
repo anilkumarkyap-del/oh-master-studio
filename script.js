@@ -351,17 +351,56 @@ document.getElementById("qtyBtn").addEventListener("click", () => {
     return;
   }
 
-  document.getElementById("matTotal").innerText =
-    "₹" + (window.materialPU * qty).toFixed(2);
+  const oh = Number(document.getElementById("oh").value);
+  const material = Number(document.getElementById("material").value);
+  const labour = Number(document.getElementById("labour").value);
+  const units = Number(document.getElementById("units").value);
+  const base = Number(document.getElementById("extraInput").value);
 
-  document.getElementById("labTotal").innerText =
-    "₹" + (window.labourPU * qty).toFixed(2);
+  const materialPU = material / units;
+  const labourPU = labour / units;
+  const primeCost = material + labour;
 
-  document.getElementById("ohTotal").innerText =
-    "₹" + (window.overheadPU * qty).toFixed(2);
+  let overheadTotal = 0;
 
-  document.getElementById("grandTotal").innerText =
-    "₹" + (window.totalPU * qty).toFixed(2);
+  switch(method.value){
+
+    case "unit":
+      const unitRate = oh / units;
+      overheadTotal = unitRate * qty;
+      break;
+
+    case "labour":
+      const labourRate = oh / base;
+      const labourHoursPerUnit = base / units;
+      overheadTotal = labourRate * labourHoursPerUnit * qty;
+      break;
+
+    case "machine":
+      const machineRate = oh / base;
+      const machineHoursPerUnit = base / units;
+      overheadTotal = machineRate * machineHoursPerUnit * qty;
+      break;
+
+    case "dlc":
+      const dlPercent = oh / labour;
+      overheadTotal = dlPercent * (labourPU * qty);
+      break;
+
+    case "prime":
+      const primePercent = oh / primeCost;
+      overheadTotal = primePercent * ((materialPU + labourPU) * qty);
+      break;
+  }
+
+  const materialTotal = materialPU * qty;
+  const labourTotal = labourPU * qty;
+  const grandTotal = materialTotal + labourTotal + overheadTotal;
+
+  document.getElementById("matTotal").innerText = "₹" + materialTotal.toFixed(2);
+  document.getElementById("labTotal").innerText = "₹" + labourTotal.toFixed(2);
+  document.getElementById("ohTotal").innerText = "₹" + overheadTotal.toFixed(2);
+  document.getElementById("grandTotal").innerText = "₹" + grandTotal.toFixed(2);
 
 });
   // ==========================
