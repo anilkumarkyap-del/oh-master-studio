@@ -162,7 +162,11 @@ else if (industry.includes("Construction")) {
     }
 
     const totalPU = materialPU + labourPU + overheadPU;
-
+// Save per-unit values for Production Calculator
+window.materialPU = materialPU;
+window.labourPU = labourPU;
+window.overheadPU = overheadPU;
+window.totalPU = totalPU;
     // Result Cards
     document.getElementById("matPU").innerText = "₹" + materialPU.toFixed(2);
     document.getElementById("labPU").innerText = "₹" + labourPU.toFixed(2);
@@ -335,7 +339,31 @@ row.insertCell(2).innerText =
     }
 
   });
+// ==========================
+// PRODUCTION COST CALCULATOR
+// ==========================
+document.getElementById("qtyBtn").addEventListener("click", () => {
 
+  const qty = Number(document.getElementById("qty").value);
+
+  if(!qty || qty <= 0){
+    alert("Please enter a valid production quantity.");
+    return;
+  }
+
+  document.getElementById("matTotal").innerText =
+    "₹" + (window.materialPU * qty).toFixed(2);
+
+  document.getElementById("labTotal").innerText =
+    "₹" + (window.labourPU * qty).toFixed(2);
+
+  document.getElementById("ohTotal").innerText =
+    "₹" + (window.overheadPU * qty).toFixed(2);
+
+  document.getElementById("grandTotal").innerText =
+    "₹" + (window.totalPU * qty).toFixed(2);
+
+});
   // ==========================
   // RESET BUTTON
   // ==========================
