@@ -161,7 +161,55 @@
         </div>
 
       </div>
+<!-- ==========================
+     PRODUCTION COST CALCULATOR
+========================== -->
 
+<div class="production-panel">
+
+  <h2>Production Cost Calculator</h2>
+  <p class="subtitle">Calculate total cost for any production quantity</p>
+
+  <div class="factory-grid">
+
+    <div class="input-box">
+      <label>Required Quantity</label>
+      <input type="number" id="qty" placeholder="Enter quantity (e.g. 50)">
+    </div>
+
+    <div class="input-box" style="justify-content:end;">
+      <button id="qtyBtn" class="simulate-btn" style="margin-top:28px;">
+        Calculate Production Cost
+      </button>
+    </div>
+
+  </div>
+
+  <div class="results">
+
+    <div class="result-card">
+      <h4>Material Cost</h4>
+      <h2 id="matTotal">₹0.00</h2>
+    </div>
+
+    <div class="result-card">
+      <h4>Labour Cost</h4>
+      <h2 id="labTotal">₹0.00</h2>
+    </div>
+
+    <div class="result-card">
+      <h4>Overhead Cost</h4>
+      <h2 id="ohTotal">₹0.00</h2>
+    </div>
+
+    <div class="result-card total">
+      <h4>Total Production Cost</h4>
+      <h2 id="grandTotal">₹0.00</h2>
+    </div>
+
+  </div>
+
+</div>
       <!-- Cost Breakdown Chart -->
       <div class="chart-panel">
 
